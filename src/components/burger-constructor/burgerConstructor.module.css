@@ -1,0 +1,45 @@
+.elements {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 236px);
+}
+
+.burger {
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.list li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.container {
+  margin-bottom: 52px;
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.count svg {
+  width: 32px;
+  height: 32px;
+}

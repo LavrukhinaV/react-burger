@@ -1,0 +1,22 @@
+.ingredients {
+  height: calc(100vh - 236px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.table {
+  overflow-y: scroll;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  gap: 24px;
+}
+
+.list li {
+  position: relative;
+  justify-self: stretch;
+}
