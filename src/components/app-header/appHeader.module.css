@@ -18,6 +18,9 @@
 }
 
 .link {
+  background: none;
+  border: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
   color: #F2F2F3;

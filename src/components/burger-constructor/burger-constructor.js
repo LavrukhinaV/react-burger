@@ -1,7 +1,7 @@
 import React from 'react';
 import burgerConstructorStyles from './burgerConstructor.module.css';
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { data } from "../../ utils/data";
+import { data } from "../../utils/data";
 
 const img = "https://code.s3.yandex.net/react/code/bun-02.png"
 

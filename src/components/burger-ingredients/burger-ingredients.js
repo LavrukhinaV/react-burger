@@ -2,7 +2,7 @@ import React from 'react';
 import burgerIngredientsStyles from './burgerIngredients.module.css';
 import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import { data } from "../../ utils/data";
+import { data } from "../../utils/data";
 
 
 class BurgerIngredients extends React.Component {
