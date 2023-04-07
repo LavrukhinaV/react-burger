@@ -17,8 +17,9 @@
   gap: 24px;
 }
 
-.list li {
+.ingredient {
   list-style: none;
   position: relative;
   justify-self: stretch;
+  cursor: pointer;
 }

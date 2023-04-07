@@ -3,11 +3,11 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import mainStyles from './main.module.css';
 
 
-function Main() {
+function Main({onSubmitOrder, onIngredientClick, initialIngridients}) {
   return (
     <main className={mainStyles.content}>
-      <BurgerIngredients />
-      <BurgerConstructor />
+      <BurgerIngredients onIngredientClick={onIngredientClick} initialIngridients={initialIngridients}/>
+      <BurgerConstructor onSubmit={onSubmitOrder}/>
    </main>
   );
 }
