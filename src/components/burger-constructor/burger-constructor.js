@@ -51,7 +51,7 @@ function BurgerConstructor () {
         </div>
       </section>
       {isModalOrderDetailsOpen && (
-        <Modal onClose={closeModal}>
+        <Modal onClose={closeModal} isOpen={isModalOrderDetailsOpen}>
           <OrderDetails />
         </Modal>
       )}

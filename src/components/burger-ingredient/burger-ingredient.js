@@ -31,7 +31,7 @@ function BurgerIngredient({item}) {
         <h3 className="text text_type_main-default">{item.name}</h3>
       </article>
       {selectedIngredient && (
-        <Modal onClose={closeModal}>
+        <Modal onClose={closeModal} isOpen={!!selectedIngredient}>
           <IngredientDetails ingridient={selectedIngredient}/>
         </Modal>
       )}

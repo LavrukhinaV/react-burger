@@ -1,6 +1,5 @@
 .modal {
   display: flex;
-  opacity: 1;
   transition: .5s;
   position: fixed;
   justify-content: center;

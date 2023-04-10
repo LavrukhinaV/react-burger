@@ -7,20 +7,21 @@ import ReactDOM from "react-dom";
 
 const modalRoot = document.getElementById("react-modals");
 
-function Modal({children, onClose}) {
-  
-  const closeModalByEsc = (e) => {
-    if (e.key === "Escape") {
-      onClose()
-    }
-  }
+function Modal({children, onClose, isOpen}) {
 
-  useEffect(()=>{
-    document.addEventListener('keydown', closeModalByEsc);
-    return () => {
-      document.removeEventListener('keydown', closeModalByEsc);
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if(evt.key === 'Escape') {
+        onClose();
+      }
     }
-  }, [onClose])
+    if(isOpen) { // навешиваем только при открытии
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen]) 
   
 
   return (
@@ -41,7 +42,8 @@ function Modal({children, onClose}) {
 
 Modal.propTypes = {
   children: PropTypes.node,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  isOpen: PropTypes.bool
 };
 
 export default Modal;
