@@ -1,15 +1,22 @@
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import mainStyles from './main.module.css';
+import { ingredientType } from "../../utils/types";
+import PropTypes from 'prop-types';
 
-
-function Main({onSubmitOrder, onIngredientClick, initialIngridients}) {
+function Main({initialIngridients}) {
   return (
     <main className={mainStyles.content}>
-      <BurgerIngredients onIngredientClick={onIngredientClick} initialIngridients={initialIngridients}/>
-      <BurgerConstructor onSubmit={onSubmitOrder}/>
+      <BurgerIngredients initialIngridients={initialIngridients}/>
+      <BurgerConstructor/>
    </main>
   );
 }
+
+Main.propTypes = {
+  initialIngridients: PropTypes.arrayOf(
+    PropTypes.shape(ingredientType)
+  )
+};
 
 export default Main;

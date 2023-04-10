@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import burgerIngredientsStyles from './burgerIngredients.module.css';
+import burgerIngredientsStyles from './burger-ingredients.module.css';
 import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import PropTypes from 'prop-types';
+import { ingredientType } from "../../utils/types";
 
-function BurgerIngredients ({initialIngridients, onIngredientClick}){
+function BurgerIngredients ({initialIngridients}){
   const [current, setCurrent] = useState("Булки")
 
   const tabOnClick = (value) => {
@@ -15,7 +16,7 @@ function BurgerIngredients ({initialIngridients, onIngredientClick}){
   return (
     <section className={`${burgerIngredientsStyles.ingredients} mt-10 mb-10`}>
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-      <div className="mb-10" style={{ display: 'flex' }}>
+      <div className={`${burgerIngredientsStyles.tabs} mb-10`}>
         <Tab Tab value="Булки" active={current === 'Булки'} onClick={tabOnClick}>
           Булки
         </Tab>
@@ -32,7 +33,7 @@ function BurgerIngredients ({initialIngridients, onIngredientClick}){
           {initialIngridients.filter(item => item.type === "bun").map((item) => 
           <li key={item._id} className={burgerIngredientsStyles.ingredient}>
             <Counter count={1} size="default" extraClass="m-1" />
-            <BurgerIngredient item={item} onClick={onIngredientClick}/>
+            <BurgerIngredient item={item}/>
           </li>
           )}
         </ul>
@@ -41,7 +42,7 @@ function BurgerIngredients ({initialIngridients, onIngredientClick}){
           {initialIngridients.filter(item => item.type === "sauce").map((item) => 
             <li key={item._id} className={burgerIngredientsStyles.ingredient}>
               <Counter count={1} size="default" extraClass="m-1" />
-              <BurgerIngredient item={item} onClick={onIngredientClick}/>
+              <BurgerIngredient item={item}/>
             </li>
           )}
         </ul>
@@ -50,7 +51,7 @@ function BurgerIngredients ({initialIngridients, onIngredientClick}){
           {initialIngridients.filter(item => item.type === "main").map((item) => 
             <li key={item._id} className={burgerIngredientsStyles.ingredient}>
               <Counter count={1} size="default" extraClass="m-1" />
-              <BurgerIngredient item={item} onClick={onIngredientClick}/>
+              <BurgerIngredient item={item}/>
             </li>
           )}
         </ul>
@@ -61,21 +62,8 @@ function BurgerIngredients ({initialIngridients, onIngredientClick}){
 
 BurgerIngredients.propTypes = {
   initialIngridients: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      calories: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      fat: PropTypes.number,
-      image: PropTypes.string,
-      image_large: PropTypes.string,
-      image_mobile: PropTypes.string,
-      name: PropTypes.string,
-      price: PropTypes.number,
-      proteins: PropTypes.number,
-      type: PropTypes.string,
-    })
-  ),
-  onIngredientClick: PropTypes.func,
+    PropTypes.shape(ingredientType)
+  )
 };
 
 export default BurgerIngredients;

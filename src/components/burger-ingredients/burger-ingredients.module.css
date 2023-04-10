@@ -5,6 +5,10 @@
   flex-direction: column;
 }
 
+.tabs {
+  display: flex;
+}
+
 .table {
   overflow-y: scroll;
 }
