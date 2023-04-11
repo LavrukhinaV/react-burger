@@ -18,14 +18,12 @@ function App() {
   }, [])
 
   return (
-    <>
-      <div className="page text text_type_main-default">
-        <AppHeader />
-        <Main
-          initialIngridients={initialIngridients}
-        />
-      </div>
-    </>
+    <div className="page text text_type_main-default">
+      <AppHeader />
+      <Main
+        initialIngridients={initialIngridients}
+      />
+    </div>
   );
 }
 

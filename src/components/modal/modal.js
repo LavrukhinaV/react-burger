@@ -33,7 +33,7 @@ function Modal({children, onClose, isOpen}) {
           </button>
           {children}
         </div>
-        <ModalOverlay onClose={onClose}/>
+        <ModalOverlay onClose={onClose} isOpen={isOpen}/>
       </>,
       modalRoot
     )

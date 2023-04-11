@@ -15,7 +15,7 @@ function Main({initialIngridients}) {
 
 Main.propTypes = {
   initialIngridients: PropTypes.arrayOf(
-    PropTypes.shape(ingredientType)
+    ingredientType
   )
 };
 

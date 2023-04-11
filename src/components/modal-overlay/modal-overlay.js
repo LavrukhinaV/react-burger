@@ -1,9 +1,10 @@
 import modalOverlayStyles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
-function ModalOverlay({onClose}) {
+function ModalOverlay({onClose, isOpen}) {
+
   return (
-    <div 
+    <div
     className={modalOverlayStyles.modal}
     onClick={e => (e.currentTarget === e.target) && onClose()}
     />

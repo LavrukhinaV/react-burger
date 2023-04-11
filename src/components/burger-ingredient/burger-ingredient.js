@@ -1,21 +1,12 @@
 import PropTypes from 'prop-types';
 import burgerIngredientStyles from './burger-ingredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from "react";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import { ingredientType } from "../../utils/types";
 
-function BurgerIngredient({item}) {
-
-  const [selectedIngredient, setSelectedIngredient] = useState();
-
-  function closeModal () {
-    setSelectedIngredient()
-  }
+function BurgerIngredient({item, onClick}) {
 
   function handleIngredientClick() {
-    setSelectedIngredient(item)
+    onClick(item)
   }
 
   return (
@@ -30,17 +21,13 @@ function BurgerIngredient({item}) {
         </div>
         <h3 className="text text_type_main-default">{item.name}</h3>
       </article>
-      {selectedIngredient && (
-        <Modal onClose={closeModal} isOpen={!!selectedIngredient}>
-          <IngredientDetails ingridient={selectedIngredient}/>
-        </Modal>
-      )}
     </>
   );
 }
 
 BurgerIngredient.propTypes = {
-  ingridient: PropTypes.shape(ingredientType)
+  item: ingredientType.isRequired,
+  onClick: PropTypes.func
 };
 
 export default BurgerIngredient;
