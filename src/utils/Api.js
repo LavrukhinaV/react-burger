@@ -1,4 +1,4 @@
-const BASE_URL = 'https://norma.nomoreparties.space/api/ingredients';
+const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 function checkResponse (res) {
   if (res.ok) {
@@ -13,11 +13,25 @@ function request(url, options) {
 }
 
 export const getIngridients = () => {
-  return request(BASE_URL, {
+  return request(`${BASE_URL}/ingredients`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     }
+  })
+};
+
+export const submitOrder = (ingridients) => {
+
+  return request(`${BASE_URL}/orders`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ingredients: ingridients
+    })
   })
 };

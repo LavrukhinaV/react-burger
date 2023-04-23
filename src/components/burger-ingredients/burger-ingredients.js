@@ -6,23 +6,50 @@ import PropTypes from 'prop-types';
 import { ingredientType } from "../../utils/types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { useDispatch, useSelector } from 'react-redux';
+import { SET_SELECTED_INGRIDIENT, DELETE_SELECTED_INGRIDIENT } from "../../services/actions/selectedIngridient";
 
-function BurgerIngredients ({initialIngridients}){
-  const [current, setCurrent] = useState("Булки")
+function BurgerIngredients (){
+  const dispatch = useDispatch();
 
-  const [selectedIngredient, setSelectedIngredient] = useState();
+  const initialIngridients = useSelector(state => state.ingridients.ingridients);
+  const selectedIngredient = useSelector(state => state.ingridient.selectedIngridient);
+
+  const [current, setCurrent] = useState("Булки");
 
   function closeModal () {
-    setSelectedIngredient()
+    dispatch({
+      type: DELETE_SELECTED_INGRIDIENT
+    });
   }
 
   function handleIngredientClick(item) {
-    setSelectedIngredient(item)
+    dispatch({
+      type: SET_SELECTED_INGRIDIENT,
+      paylod: item
+    });
   }
 
   const tabOnClick = (value) => {
     setCurrent(value)
     document.getElementById(value).scrollIntoView( { behavior: "smooth"})
+  }
+
+  const onIngridientsScroll = () => {
+
+    const containerTop = document.getElementById('контейнер').getBoundingClientRect().top;
+    const bunTop = document.getElementById('Булки').getBoundingClientRect().top;
+    const sauceTop = document.getElementById('Соусы').getBoundingClientRect().top;
+    const mainTop = document.getElementById('Начинки').getBoundingClientRect().top;
+
+    console.log(containerTop)
+    if (bunTop >= containerTop && containerTop < sauceTop) {
+        setCurrent('Булки')
+    } else if (sauceTop <= containerTop && containerTop < mainTop) {
+        setCurrent('Соусы')
+    } else if (mainTop <= containerTop) {
+        setCurrent('Начинки')
+    }
   }
 
   return (
@@ -40,7 +67,7 @@ function BurgerIngredients ({initialIngridients}){
             Начинки
           </Tab>
         </div>
-        <div className={`${burgerIngredientsStyles.table} custom-scroll`}>
+        <div className={`${burgerIngredientsStyles.table} custom-scroll`} onScroll={onIngridientsScroll} id="контейнер">
           <h2 className="text text_type_main-medium mb-6" id="Булки">Булки</h2>
           <ul className={`${burgerIngredientsStyles.list} mb-10`}>
             {initialIngridients.filter(item => item.type === "bun").map((item) => 
@@ -70,7 +97,7 @@ function BurgerIngredients ({initialIngridients}){
           </ul>
         </div>
       </section>
-      {selectedIngredient && (
+      {Object.keys(selectedIngredient).length !== 0 && (
         <Modal onClose={closeModal} isOpen={!!selectedIngredient}>
           <IngredientDetails ingridient={selectedIngredient}/>
         </Modal>

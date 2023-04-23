@@ -1,16 +1,21 @@
 import burgerConstructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from "react";
+import { useState,   useEffect } from "react";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
+import { getOrderDate } from "../../services/actions/orderDetails";
+import { useDispatch, useSelector } from 'react-redux';
 
 const img = "https://code.s3.yandex.net/react/code/bun-02.png"
 
 function BurgerConstructor () {
+  const dispatch = useDispatch();
+
   const [isModalOrderDetailsOpen, setModalOrderDetailsOpen] = useState(false);
 
   function handleOrderSubmit() {
     setModalOrderDetailsOpen(true)
+    dispatch(getOrderDate(["643d69a5c3f7b9001cfa093c","643d69a5c3f7b9001cfa0941", "643d69a5c3f7b9001cfa093c"]))
   };
 
   function closeModal () {

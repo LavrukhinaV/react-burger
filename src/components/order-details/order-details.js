@@ -1,10 +1,14 @@
 import orderDetailsStyles from './order-details.module.css';
+import { useSelector } from 'react-redux';
+
 
 function OrderDetails() {
+  const orderDate = useSelector(state => state.order.orderDate);
 
+  console.log(orderDate)
   return (
     <div className={orderDetailsStyles.container}>
-      <h2 className={`${orderDetailsStyles.title} mb-8 text text_type_digits-large`}>034536</h2>
+      <h2 className={`${orderDetailsStyles.title} mb-8 text text_type_digits-large`}>{orderDate.order?.number}</h2>
       <p className="mb-15 text text_type_main-medium">идентификатор заказа</p>
       <span className={`${orderDetailsStyles.icon} mb-15`}/>
       <p className="mb-2 text text_type_main-default">Ваш заказ начали готовить</p>
