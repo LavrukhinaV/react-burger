@@ -5,7 +5,7 @@ import appStyles from "./app.module.css";
 import * as api from '../../utils/Api';
 
 import { useDispatch } from 'react-redux';
-import { loadInitialIngridients } from "../../services/actions/initialIngridients";
+import { loadInitialIngridients } from "../../services/actions/initial-ingridients";
 
 function App() {
 

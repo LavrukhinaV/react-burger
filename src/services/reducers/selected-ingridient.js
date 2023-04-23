@@ -1,7 +1,7 @@
 import {
   SET_SELECTED_INGRIDIENT,
   DELETE_SELECTED_INGRIDIENT,
-} from "../actions/selectedIngridient";
+} from "../actions/selected-ingridient";
 
 const selectedIngridientState = {
   selectedIngridient: {},

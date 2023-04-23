@@ -1,6 +1,6 @@
 import {
   UPDATE_ORDER_DATE,
-} from "../actions/orderDetails";
+} from "../actions/order-details";
 
 const orderInitialState = {
   orderDate: {},

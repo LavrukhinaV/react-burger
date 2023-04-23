@@ -1,6 +1,6 @@
 import {
   GET_INITIAL_INGRIDIENTS,
-} from "../actions/initialIngridients";
+} from "../actions/initial-ingridients";
 
 const initialIngridientState = {
   ingridients: [],

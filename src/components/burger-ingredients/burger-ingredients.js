@@ -7,13 +7,15 @@ import { ingredientType } from "../../utils/types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_SELECTED_INGRIDIENT, DELETE_SELECTED_INGRIDIENT } from "../../services/actions/selectedIngridient";
+import { SET_SELECTED_INGRIDIENT, DELETE_SELECTED_INGRIDIENT } from "../../services/actions/selected-ingridient";
 
 function BurgerIngredients (){
   const dispatch = useDispatch();
 
   const initialIngridients = useSelector(state => state.ingridients.ingridients);
   const selectedIngredient = useSelector(state => state.ingridient.selectedIngridient);
+  const constructorIngridients = useSelector(state => state.burgerConstructor.ingridients)
+  const constructorBun = useSelector(state => state.burgerConstructor.bun)
 
   const [current, setCurrent] = useState("Булки");
 
@@ -42,7 +44,6 @@ function BurgerIngredients (){
     const sauceTop = document.getElementById('Соусы').getBoundingClientRect().top;
     const mainTop = document.getElementById('Начинки').getBoundingClientRect().top;
 
-    console.log(containerTop)
     if (bunTop >= containerTop && containerTop < sauceTop) {
         setCurrent('Булки')
     } else if (sauceTop <= containerTop && containerTop < mainTop) {
@@ -50,6 +51,22 @@ function BurgerIngredients (){
     } else if (mainTop <= containerTop) {
         setCurrent('Начинки')
     }
+  }
+
+  const calculateCount = (ingridient) => {
+    let count = 0;
+    if(ingridient.type !== "bun") {
+      constructorIngridients.forEach(item => {
+          if (ingridient._id === item._id) {
+              count++
+          }
+      })
+    } else {
+      if (ingridient._id === constructorBun._id) {
+        count = 2;
+      }
+    }
+    return count;
   }
 
   return (
@@ -72,7 +89,7 @@ function BurgerIngredients (){
           <ul className={`${burgerIngredientsStyles.list} mb-10`}>
             {initialIngridients.filter(item => item.type === "bun").map((item) => 
             <li key={item._id} className={burgerIngredientsStyles.ingredient}>
-              <Counter count={1} size="default" extraClass="m-1" />
+              <Counter count={calculateCount(item)} size="default" extraClass="m-1" />
               <BurgerIngredient item={item} onClick={handleIngredientClick}/>
             </li>
             )}
@@ -81,7 +98,7 @@ function BurgerIngredients (){
           <ul className={`${burgerIngredientsStyles.list} mb-10`}>
             {initialIngridients.filter(item => item.type === "sauce").map((item) => 
               <li key={item._id} className={burgerIngredientsStyles.ingredient}>
-                <Counter count={1} size="default" extraClass="m-1" />
+                <Counter count={calculateCount(item)} size="default" extraClass="m-1" />
                 <BurgerIngredient item={item} onClick={handleIngredientClick}/>
               </li>
             )}
@@ -90,7 +107,7 @@ function BurgerIngredients (){
           <ul className={`${burgerIngredientsStyles.list} mb-10`}>
             {initialIngridients.filter(item => item.type === "main").map((item) => 
               <li key={item._id} className={burgerIngredientsStyles.ingredient}>
-                <Counter count={1} size="default" extraClass="m-1" />
+                <Counter count={calculateCount(item)} size="default" extraClass="m-1" />
                 <BurgerIngredient item={item} onClick={handleIngredientClick}/>
               </li>
             )}

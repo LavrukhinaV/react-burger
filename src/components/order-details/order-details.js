@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 function OrderDetails() {
   const orderDate = useSelector(state => state.order.orderDate);
 
-  console.log(orderDate)
   return (
     <div className={orderDetailsStyles.container}>
       <h2 className={`${orderDetailsStyles.title} mb-8 text text_type_digits-large`}>{orderDate.order?.number}</h2>
