@@ -23,25 +23,27 @@ function BurgerConstructor () {
 
   const orderIngredients = () => {
     const allIngredients = [
-      ...Array(2).fill(constructorBun._id),
-      ...constructorIngredients.map(item => item._id)
+      constructorBun._id,
+      ...constructorIngredients.map(item => item._id),
+      constructorBun._id
     ]
     return allIngredients
   };
 
   const price = useMemo(() => {
+    if( constructorIngredients  && constructorBun) 
     return (
       (
         constructorIngredients.reduce((acc, curr) => {return acc + curr.price;}, 0) +
         constructorBun.price * 2
       )
     )
-  }, [constructorIngredients, constructorBun])
+  }, [constructorIngredients, constructorBun]);
 
 
   function handleOrderSubmit() {
-    setModalOrderDetailsOpen(true)
-    dispatch(getOrderDate(orderIngredients()))
+    dispatch(getOrderDate(orderIngredients()));
+    setModalOrderDetailsOpen(true);
   };
 
   const [, dropTarget] = useDrop({
@@ -59,13 +61,14 @@ function BurgerConstructor () {
     <>
       <section className={`${burgerConstructorStyles.elements} pt-25 mb-10`}>
         <div className={`${burgerConstructorStyles.burger} mb-10`} ref={dropTarget}>
-          <ConstructorElement
+        {constructorBun && <ConstructorElement
             type="top"
             isLocked={true}
             text={`${constructorBun.name} (верх)`}
             price={constructorBun.price}
             thumbnail={constructorBun.image}
-          />
+          />}
+          
           <ul className={`${burgerConstructorStyles.list} mb-4 mt-4 pr-2 custom-scroll`}>
             {constructorIngredients.map((ingredient, index) => 
               <ConstructorIngredient
@@ -73,22 +76,26 @@ function BurgerConstructor () {
                 key={ingredient.uuid}
                 index={index}
               />
-            )}
+              )
+            }
           </ul>
-          <ConstructorElement
+          {constructorIngredients.length === 0 && !constructorBun && 
+          <p className={`${burgerConstructorStyles.note} text text_type_main-medium`}>Перенесите ингдиенты в конструктор</p>
+          }
+          {constructorBun && <ConstructorElement
             type="bottom"
             isLocked={true}
             text={`${constructorBun.name} (низ)`}
             price={constructorBun.price}
             thumbnail={constructorBun.image}
-          />
+          />}
         </div>
         <div className={`${burgerConstructorStyles.container} pr-4`}>
           <p className={`${burgerConstructorStyles.count} mr-10 text text_type_digits-medium`}>
             {price}
             <CurrencyIcon className={burgerConstructorStyles.container}/>
           </p>
-          <Button htmlType="button" type="primary" size="large" onClick={handleOrderSubmit}>
+          <Button disabled={constructorIngredients.length === 0 || !constructorBun} htmlType="button" type="primary" size="large" onClick={handleOrderSubmit}>
             Оформить заказ
           </Button>
         </div>

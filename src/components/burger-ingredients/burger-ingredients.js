@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
-import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import PropTypes from 'prop-types';
 import { ingredientType } from "../../utils/types";
@@ -38,13 +38,18 @@ function BurgerIngredients (){
     setCurrent(value);
     document.getElementById(value).scrollIntoView( { behavior: "smooth"});
   };
+  
+  const containerTopRef = useRef(null);
+  const bunTopRef = useRef(null);
+  const sauceTopRef = useRef(null);
+  const mainTopRef = useRef(null);
 
   const onIngredientsScroll = () => {
 
-    const containerTop = document.getElementById('контейнер').getBoundingClientRect().top;
-    const bunTop = document.getElementById('Булки').getBoundingClientRect().top;
-    const sauceTop = document.getElementById('Соусы').getBoundingClientRect().top;
-    const mainTop = document.getElementById('Начинки').getBoundingClientRect().top;
+    const containerTop = containerTopRef.current.getBoundingClientRect().top;
+    const bunTop = bunTopRef.current.getBoundingClientRect().top;
+    const sauceTop =  sauceTopRef.current.getBoundingClientRect().top;
+    const mainTop = mainTopRef.current.getBoundingClientRect().top;
 
     if (bunTop >= containerTop && containerTop < sauceTop) {
         setCurrent('Булки')
@@ -57,15 +62,17 @@ function BurgerIngredients (){
 
   const calculateCount = (ingredient) => {
     let count = 0;
-    if(ingredient.type !== "bun") {
-      constructorIngredients.forEach(item => {
-        if (ingredient._id === item._id) {
-          count++
+    if(constructorIngredients && constructorBun) {
+      if(ingredient.type !== "bun") {
+        constructorIngredients.forEach(item => {
+          if (ingredient._id === item._id) {
+            count++
+          }
+        })
+      } else {
+        if (ingredient._id === constructorBun._id) {
+          count = 2;
         }
-      })
-    } else {
-      if (ingredient._id === constructorBun._id) {
-        count = 2;
       }
     }
     return count;
@@ -86,31 +93,28 @@ function BurgerIngredients (){
             Начинки
           </Tab>
         </div>
-        <div className={`${burgerIngredientsStyles.table} custom-scroll`} onScroll={onIngredientsScroll} id="контейнер">
-          <h2 className="text text_type_main-medium mb-6" id="Булки">Булки</h2>
+        <div className={`${burgerIngredientsStyles.table} custom-scroll`} onScroll={onIngredientsScroll} id="контейнер" ref={containerTopRef}>
+          <h2 className="text text_type_main-medium mb-6" id="Булки" ref={bunTopRef}>Булки</h2>
           <ul className={`${burgerIngredientsStyles.list} mb-10`}>
             {initialIngredients.filter(item => item.type === "bun").map((item) => 
             <li key={item._id} className={burgerIngredientsStyles.ingredient}>
-              <Counter count={calculateCount(item)} size="default" extraClass="m-1" />
-              <BurgerIngredient item={item} onClick={handleIngredientClick}/>
+              <BurgerIngredient item={item} onClick={handleIngredientClick} count={calculateCount(item)}/>
             </li>
             )}
           </ul>
-          <h2 className="text text_type_main-medium mb-6" id="Соусы">Соусы</h2>
+          <h2 className="text text_type_main-medium mb-6" id="Соусы" ref={sauceTopRef}>Соусы</h2>
           <ul className={`${burgerIngredientsStyles.list} mb-10`}>
             {initialIngredients.filter(item => item.type === "sauce").map((item) => 
               <li key={item._id} className={burgerIngredientsStyles.ingredient}>
-                <Counter count={calculateCount(item)} size="default" extraClass="m-1" />
-                <BurgerIngredient item={item} onClick={handleIngredientClick}/>
+                <BurgerIngredient item={item} onClick={handleIngredientClick} count={calculateCount(item)}/>
               </li>
             )}
           </ul>
-          <h2 className="text text_type_main-medium mb-6" id="Начинки">Начинки</h2>
+          <h2 className="text text_type_main-medium mb-6" id="Начинки" ref={mainTopRef}>Начинки</h2>
           <ul className={`${burgerIngredientsStyles.list} mb-10`}>
             {initialIngredients.filter(item => item.type === "main").map((item) => 
               <li key={item._id} className={burgerIngredientsStyles.ingredient}>
-                <Counter count={calculateCount(item)} size="default" extraClass="m-1" />
-                <BurgerIngredient item={item} onClick={handleIngredientClick}/>
+                <BurgerIngredient item={item} onClick={handleIngredientClick} count={calculateCount(item)}/>
               </li>
             )}
           </ul>
