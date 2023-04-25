@@ -12,7 +12,7 @@ function request(url, options) {
   return fetch(url, options).then(checkResponse)
 }
 
-export const getIngridients = () => {
+export const getIngredients = () => {
   return request(`${BASE_URL}/ingredients`, {
     method: 'GET',
     headers: {
@@ -22,7 +22,7 @@ export const getIngridients = () => {
   })
 };
 
-export const submitOrder = (ingridients) => {
+export const submitOrder = (ingredients) => {
 
   return request(`${BASE_URL}/orders`, {
     method: 'POST',
@@ -31,7 +31,7 @@ export const submitOrder = (ingridients) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      ingredients: ingridients
+      ingredients: ingredients
     })
   })
 };

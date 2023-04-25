@@ -5,14 +5,14 @@ import appStyles from "./app.module.css";
 import * as api from '../../utils/Api';
 
 import { useDispatch } from 'react-redux';
-import { loadInitialIngridients } from "../../services/actions/initial-ingridients";
+import { loadInitialIngredients } from "../../services/actions/initial-ingredients";
 
 function App() {
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadInitialIngridients ())
+    dispatch(loadInitialIngredients ())
   }, [])
 
   return (

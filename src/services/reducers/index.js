@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { constructorReduser } from "./burger-constructor";
-import { initialIngridientReduser } from "./initial-ingridients";
+import { initialIngredientReduser } from "./initial-ingredients";
 import { orderReduser } from "./order-details";
-import { selectedIngridientReduser } from "./selected-ingridient";
+import { selectedIngredientReduser } from "./selected-ingredient";
 
 export const rootReducer = combineReducers({
-  ingridients: initialIngridientReduser,
+  ingredients: initialIngredientReduser,
   burgerConstructor: constructorReduser,
   order: orderReduser,
-  ingridient: selectedIngridientReduser,
+  ingredient: selectedIngredientReduser,
 });

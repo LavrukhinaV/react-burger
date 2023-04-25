@@ -1,17 +1,18 @@
 import burgerConstructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState,   useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import { getOrderDate } from "../../services/actions/order-details";
 import { useDispatch, useSelector } from 'react-redux';
-import ConstructorIngridient from "../constructor-ingridient/constructor-ingridient";
+import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
 import { useDrop } from "react-dnd";
-import { addConstructorIngridient, setConstructorBun } from "../../services/actions/burger-constructor";
+import { addConstructorIngredient, setConstructorBun } from "../../services/actions/burger-constructor";
+import { UPDATE_CONSTRUCTOR_INGRIEIENTS } from "../../services/actions/burger-constructor";
 
 function BurgerConstructor () {
   const dispatch = useDispatch();
-  const constructorIngridients = useSelector(state => state.burgerConstructor.ingridients);
+  const constructorIngredients = useSelector(state => state.burgerConstructor.ingredients);
   const constructorBun = useSelector(state => state.burgerConstructor.bun);
 
   const [isModalOrderDetailsOpen, setModalOrderDetailsOpen] = useState(false);
@@ -19,7 +20,7 @@ function BurgerConstructor () {
   const orderIngredients = () => {
     const allIngredients = [
         ...Array(2).fill(constructorBun._id),
-        ...constructorIngridients.map(item => item._id)
+        ...constructorIngredients.map(item => item._id)
     ]
     return allIngredients
   }
@@ -29,20 +30,20 @@ function BurgerConstructor () {
     dispatch(getOrderDate(orderIngredients()))
   };
 
-  const getConstructorIngridientSum  = (ingridients) => {
-    if(ingridients === undefined) {
+  const getConstructorIngredientSum  = (ingredients) => {
+    if(ingredients === undefined) {
       return 0 ;
-    }else if (ingridients.length === 0) {
+    }else if (ingredients.length === 0) {
       return 0;
     } else {
-      return ingridients.reduce((acc, curr) => {return acc + curr.price;}, 0);
+      return ingredients.reduce((acc, curr) => {return acc + curr.price;}, 0);
     }
   };
 
-  const getBurgerOrderSum  = (ingridients, bun) => {
-    let ingridientsSum = getConstructorIngridientSum(ingridients)
+  const getBurgerOrderSum  = (ingredients, bun) => {
+    let ingredientsSum = getConstructorIngredientSum(ingredients)
     let bunSum = bun.price * 2
-    return ingridientsSum + bunSum
+    return ingredientsSum + bunSum
   };
 
   function closeModal () {
@@ -50,16 +51,15 @@ function BurgerConstructor () {
   }
 
   const [, dropTarget] = useDrop({
-    accept: "ingridients",
-    drop(ingridient) {
-      if (ingridient.type !== "bun") {
-        dispatch(addConstructorIngridient(ingridient))
+    accept: "ingredients",
+    drop(ingredient) {
+      if (ingredient.type !== "bun") {
+        dispatch(addConstructorIngredient(ingredient))
       } else {
-        dispatch(setConstructorBun(ingridient))
+        dispatch(setConstructorBun(ingredient))
       }
     },
   });
-
 
   return (
     <>
@@ -74,8 +74,12 @@ function BurgerConstructor () {
             extraClass="mr-5"
           />
           <ul className={`${burgerConstructorStyles.list} mb-4 mt-4 pr-2 custom-scroll`}>
-            {constructorIngridients.map((ingridient, index) => 
-              <ConstructorIngridient ingridient={ingridient} key={index}/>
+            {constructorIngredients.map((ingredient, index) => 
+              <ConstructorIngredient
+                ingredient={ingredient}
+                key={ingredient.uuid}
+                index={index}
+              />
             )}
           </ul>
           <ConstructorElement
@@ -89,7 +93,7 @@ function BurgerConstructor () {
         </div>
         <div className={`${burgerConstructorStyles.container} pr-4`}>
           <p className={`${burgerConstructorStyles.count} mr-10 text text_type_digits-medium`}>
-            {getBurgerOrderSum(constructorIngridients, constructorBun)}
+            {getBurgerOrderSum(constructorIngredients, constructorBun)}
             <CurrencyIcon className={burgerConstructorStyles.container}/>
           </p>
           <Button htmlType="button" type="primary" size="large" onClick={handleOrderSubmit}>

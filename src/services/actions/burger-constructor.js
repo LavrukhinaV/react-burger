@@ -1,14 +1,13 @@
-export const UPDATE_CONSTRUCTOR_INGRIDIENTS = "UPDATE_CONSTRUCTOR_INGRIDIENTS";
-export const ADD_CONSTRUCTOR_INGRIDIENT = "ADD_CONSTRUCTOR_INGRIDIENT";
-export const DELETE_CONSTRUCTOR_INGRIDIENT = "DELETE_CONSTRUCTOR_INGRIDIENT";
+export const UPDATE_CONSTRUCTOR_INGREDIENTS = "UPDATE_CONSTRUCTOR_INGREDIENTS";
+export const ADD_CONSTRUCTOR_INGREDIENT = "ADD_CONSTRUCTOR_INGREDIENT";
+export const DELETE_CONSTRUCTOR_INGREDIENT = "DELETE_CONSTRUCTOR_INGREDIENT";
 export const SET_CONSTRUCTOR_BUN = "SET_CONSTRUCTOR_BUN";
 
-export const addConstructorIngridient = (ingridient) => (dispatch) => {
-
+export const addConstructorIngredient = (ingredient) => (dispatch) => {
   dispatch ({
-    type: ADD_CONSTRUCTOR_INGRIDIENT,
-    ingridient: {
-      ...ingridient,
+    type: ADD_CONSTRUCTOR_INGREDIENT,
+    ingredient: {
+      ...ingredient,
       uuid: crypto.randomUUID()
     }
   })
@@ -19,4 +18,4 @@ export const setConstructorBun = (bun) => (dispatch) => {
     type: SET_CONSTRUCTOR_BUN,
     bun
   })
-}
+};

@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-function Main({initialIngridients}) {
+function Main({initialIngredients}) {
   return (
     <main className={mainStyles.content}>
       <DndProvider backend={HTML5Backend}>
-        <BurgerIngredients initialIngridients={initialIngridients}/>
+        <BurgerIngredients initialIngredients={initialIngredients}/>
         <BurgerConstructor/>
       </DndProvider>
    </main>
@@ -18,7 +18,7 @@ function Main({initialIngridients}) {
 }
 
 Main.propTypes = {
-  initialIngridients: PropTypes.arrayOf(
+  initialIngredients: PropTypes.arrayOf(
     ingredientType
   )
 };

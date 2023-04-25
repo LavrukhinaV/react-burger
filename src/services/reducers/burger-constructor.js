@@ -1,12 +1,12 @@
 import {
-  UPDATE_CONSTRUCTOR_INGRIDIENTS,
-  ADD_CONSTRUCTOR_INGRIDIENT,
-  DELETE_CONSTRUCTOR_INGRIDIENT,
+  UPDATE_CONSTRUCTOR_INGREDIENTS,
+  ADD_CONSTRUCTOR_INGREDIENT,
+  DELETE_CONSTRUCTOR_INGREDIENT,
   SET_CONSTRUCTOR_BUN
 } from "../actions/burger-constructor";
 
 const constructorInitialState = {
-  ingridients: [ ],
+  ingredients: [ ],
   bun: {
     _id: "643d69a5c3f7b9001cfa093c",
     name: "Краторная булка N-200i",
@@ -24,28 +24,35 @@ const constructorInitialState = {
 
 export const constructorReduser = (state = constructorInitialState, action) => {
   switch(action.type) {
-    case UPDATE_CONSTRUCTOR_INGRIDIENTS: {
+    case UPDATE_CONSTRUCTOR_INGREDIENTS: {
+      console.log(action)
+      const ingredients = [...state.ingredients];
+      ingredients.splice(
+        action.payload.to,
+        0,
+        ingredients.splice(action.payload.from, 1)[0]
+      );
       return {
         ...state,
-        ingridients: action.ingridients
+        ingredients
       }
     }
 
-    case ADD_CONSTRUCTOR_INGRIDIENT: {
+    case ADD_CONSTRUCTOR_INGREDIENT: {
       return {
         ...state,
-        ingridients: [
-          ...state.ingridients,
-          action.ingridient
+        ingredients: [
+          ...state.ingredients,
+          action.ingredient
         ]
       }
     }
 
-    case DELETE_CONSTRUCTOR_INGRIDIENT: {
+    case DELETE_CONSTRUCTOR_INGREDIENT: {
       return {
         ...state,
-        ingridients: [
-          ...state.ingridients.filter(ingridient => ingridient.uuid !== action.ingridient.uuid)
+        ingredients: [
+          ...state.ingredients.filter(ingredient => ingredient.uuid !== action.ingredient.uuid)
         ]
       }
     }

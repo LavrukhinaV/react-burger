@@ -11,7 +11,7 @@ function BurgerIngredient({item, onClick}) {
   }
 
   const [, dragRef] = useDrag({
-    type: 'ingridients',
+    type: 'ingredients',
     item: item,
   });
 
