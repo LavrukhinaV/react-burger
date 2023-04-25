@@ -15,7 +15,7 @@ function Modal({children, onClose, isOpen}) {
         onClose();
       }
     }
-    if(isOpen) { // навешиваем только при открытии
+    if(isOpen) {
       document.addEventListener('keydown', closeByEscape);
       return () => {
         document.removeEventListener('keydown', closeByEscape);

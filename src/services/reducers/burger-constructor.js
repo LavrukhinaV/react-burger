@@ -58,12 +58,12 @@ export const constructorReduser = (state = constructorInitialState, action) => {
     }
 
     case SET_CONSTRUCTOR_BUN: {
-
       return {
         ...state,
         bun: action.bun
       }
     }
+    
     default:
       return state;
   }

@@ -1,9 +1,9 @@
 import orderDetailsStyles from './order-details.module.css';
 import { useSelector } from 'react-redux';
-
+import { getOrderDate } from "../../services/selectors/order-details";
 
 function OrderDetails() {
-  const orderDate = useSelector(state => state.order.orderDate);
+  const orderDate = useSelector(getOrderDate);
 
   return (
     <div className={orderDetailsStyles.container}>

@@ -8,14 +8,16 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_SELECTED_INGREDIENT, DELETE_SELECTED_INGREDIENT } from "../../services/actions/selected-ingredient";
+import { getInitialIngredients, getSelectedIngredient } from "../../services/selectors/initial-ingredients";
+import { getConstructorIngredients, getConstructorBun } from "../../services/selectors/burger-constructor";
 
 function BurgerIngredients (){
   const dispatch = useDispatch();
 
-  const initialIngredients = useSelector(state => state.ingredients.ingredients);
-  const selectedIngredient = useSelector(state => state.ingredient.selectedIngredient);
-  const constructorIngredients = useSelector(state => state.burgerConstructor.ingredients)
-  const constructorBun = useSelector(state => state.burgerConstructor.bun)
+  const initialIngredients = useSelector(getInitialIngredients);
+  const selectedIngredient = useSelector(getSelectedIngredient);
+  const constructorIngredients = useSelector(getConstructorIngredients);
+  const constructorBun = useSelector(getConstructorBun);
 
   const [current, setCurrent] = useState("Булки");
 
@@ -23,19 +25,19 @@ function BurgerIngredients (){
     dispatch({
       type: DELETE_SELECTED_INGREDIENT
     });
-  }
+  };
 
   function handleIngredientClick(item) {
     dispatch({
       type: SET_SELECTED_INGREDIENT,
       paylod: item
     });
-  }
+  };
 
   const tabOnClick = (value) => {
-    setCurrent(value)
-    document.getElementById(value).scrollIntoView( { behavior: "smooth"})
-  }
+    setCurrent(value);
+    document.getElementById(value).scrollIntoView( { behavior: "smooth"});
+  };
 
   const onIngredientsScroll = () => {
 
@@ -51,15 +53,15 @@ function BurgerIngredients (){
     } else if (mainTop <= containerTop) {
         setCurrent('Начинки')
     }
-  }
+  };
 
   const calculateCount = (ingredient) => {
     let count = 0;
     if(ingredient.type !== "bun") {
       constructorIngredients.forEach(item => {
-          if (ingredient._id === item._id) {
-              count++
-          }
+        if (ingredient._id === item._id) {
+          count++
+        }
       })
     } else {
       if (ingredient._id === constructorBun._id) {
@@ -67,7 +69,7 @@ function BurgerIngredients (){
       }
     }
     return count;
-  }
+  };
 
   return (
     <>
