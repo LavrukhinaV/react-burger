@@ -1,29 +1,82 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
-import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import PropTypes from 'prop-types';
 import { ingredientType } from "../../utils/types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { useDispatch, useSelector } from 'react-redux';
+import { SET_SELECTED_INGREDIENT, DELETE_SELECTED_INGREDIENT } from "../../services/actions/selected-ingredient";
+import { getInitialIngredients, getSelectedIngredient } from "../../services/selectors/initial-ingredients";
+import { getConstructorIngredients, getConstructorBun } from "../../services/selectors/burger-constructor";
 
-function BurgerIngredients ({initialIngridients}){
-  const [current, setCurrent] = useState("Булки")
+function BurgerIngredients (){
+  const dispatch = useDispatch();
 
-  const [selectedIngredient, setSelectedIngredient] = useState();
+  const initialIngredients = useSelector(getInitialIngredients);
+  const selectedIngredient = useSelector(getSelectedIngredient);
+  const constructorIngredients = useSelector(getConstructorIngredients);
+  const constructorBun = useSelector(getConstructorBun);
+
+  const [current, setCurrent] = useState("Булки");
 
   function closeModal () {
-    setSelectedIngredient()
-  }
+    dispatch({
+      type: DELETE_SELECTED_INGREDIENT
+    });
+  };
 
   function handleIngredientClick(item) {
-    setSelectedIngredient(item)
-  }
+    dispatch({
+      type: SET_SELECTED_INGREDIENT,
+      paylod: item
+    });
+  };
 
   const tabOnClick = (value) => {
-    setCurrent(value)
-    document.getElementById(value).scrollIntoView( { behavior: "smooth"})
-  }
+    setCurrent(value);
+    document.getElementById(value).scrollIntoView( { behavior: "smooth"});
+  };
+  
+  const containerTopRef = useRef(null);
+  const bunTopRef = useRef(null);
+  const sauceTopRef = useRef(null);
+  const mainTopRef = useRef(null);
+
+  const onIngredientsScroll = () => {
+
+    const containerTop = containerTopRef.current.getBoundingClientRect().top;
+    const bunTop = bunTopRef.current.getBoundingClientRect().top;
+    const sauceTop =  sauceTopRef.current.getBoundingClientRect().top;
+    const mainTop = mainTopRef.current.getBoundingClientRect().top;
+
+    if (bunTop >= containerTop && containerTop < sauceTop) {
+        setCurrent('Булки')
+    } else if (sauceTop <= containerTop && containerTop < mainTop) {
+        setCurrent('Соусы')
+    } else if (mainTop <= containerTop) {
+        setCurrent('Начинки')
+    }
+  };
+
+  const calculateCount = (ingredient) => {
+    let count = 0;
+    if(constructorIngredients && constructorBun) {
+      if(ingredient.type !== "bun") {
+        constructorIngredients.forEach(item => {
+          if (ingredient._id === item._id) {
+            count++
+          }
+        })
+      } else {
+        if (ingredient._id === constructorBun._id) {
+          count = 2;
+        }
+      }
+    }
+    return count;
+  };
 
   return (
     <>
@@ -40,39 +93,36 @@ function BurgerIngredients ({initialIngridients}){
             Начинки
           </Tab>
         </div>
-        <div className={`${burgerIngredientsStyles.table} custom-scroll`}>
-          <h2 className="text text_type_main-medium mb-6" id="Булки">Булки</h2>
+        <div className={`${burgerIngredientsStyles.table} custom-scroll`} onScroll={onIngredientsScroll} id="контейнер" ref={containerTopRef}>
+          <h2 className="text text_type_main-medium mb-6" id="Булки" ref={bunTopRef}>Булки</h2>
           <ul className={`${burgerIngredientsStyles.list} mb-10`}>
-            {initialIngridients.filter(item => item.type === "bun").map((item) => 
+            {initialIngredients.filter(item => item.type === "bun").map((item) => 
             <li key={item._id} className={burgerIngredientsStyles.ingredient}>
-              <Counter count={1} size="default" extraClass="m-1" />
-              <BurgerIngredient item={item} onClick={handleIngredientClick}/>
+              <BurgerIngredient item={item} onClick={handleIngredientClick} count={calculateCount(item)}/>
             </li>
             )}
           </ul>
-          <h2 className="text text_type_main-medium mb-6" id="Соусы">Соусы</h2>
+          <h2 className="text text_type_main-medium mb-6" id="Соусы" ref={sauceTopRef}>Соусы</h2>
           <ul className={`${burgerIngredientsStyles.list} mb-10`}>
-            {initialIngridients.filter(item => item.type === "sauce").map((item) => 
+            {initialIngredients.filter(item => item.type === "sauce").map((item) => 
               <li key={item._id} className={burgerIngredientsStyles.ingredient}>
-                <Counter count={1} size="default" extraClass="m-1" />
-                <BurgerIngredient item={item} onClick={handleIngredientClick}/>
+                <BurgerIngredient item={item} onClick={handleIngredientClick} count={calculateCount(item)}/>
               </li>
             )}
           </ul>
-          <h2 className="text text_type_main-medium mb-6" id="Начинки">Начинки</h2>
+          <h2 className="text text_type_main-medium mb-6" id="Начинки" ref={mainTopRef}>Начинки</h2>
           <ul className={`${burgerIngredientsStyles.list} mb-10`}>
-            {initialIngridients.filter(item => item.type === "main").map((item) => 
+            {initialIngredients.filter(item => item.type === "main").map((item) => 
               <li key={item._id} className={burgerIngredientsStyles.ingredient}>
-                <Counter count={1} size="default" extraClass="m-1" />
-                <BurgerIngredient item={item} onClick={handleIngredientClick}/>
+                <BurgerIngredient item={item} onClick={handleIngredientClick} count={calculateCount(item)}/>
               </li>
             )}
           </ul>
         </div>
       </section>
-      {selectedIngredient && (
+      {Object.keys(selectedIngredient).length !== 0 && (
         <Modal onClose={closeModal} isOpen={!!selectedIngredient}>
-          <IngredientDetails ingridient={selectedIngredient}/>
+          <IngredientDetails ingredient={selectedIngredient}/>
         </Modal>
       )}
     </>
@@ -80,7 +130,7 @@ function BurgerIngredients ({initialIngridients}){
 };
 
 BurgerIngredients.propTypes = {
-  initialIngridients: PropTypes.arrayOf(
+  initialIngredients: PropTypes.arrayOf(
     ingredientType
   )
 };

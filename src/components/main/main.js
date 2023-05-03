@@ -3,18 +3,22 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import mainStyles from './main.module.css';
 import { ingredientType } from "../../utils/types";
 import PropTypes from 'prop-types';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-function Main({initialIngridients}) {
+function Main({initialIngredients}) {
   return (
     <main className={mainStyles.content}>
-      <BurgerIngredients initialIngridients={initialIngridients}/>
-      <BurgerConstructor/>
+      <DndProvider backend={HTML5Backend}>
+        <BurgerIngredients initialIngredients={initialIngredients}/>
+        <BurgerConstructor/>
+      </DndProvider>
    </main>
   );
 }
 
 Main.propTypes = {
-  initialIngridients: PropTypes.arrayOf(
+  initialIngredients: PropTypes.arrayOf(
     ingredientType
   )
 };

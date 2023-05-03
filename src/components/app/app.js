@@ -2,27 +2,23 @@ import { useState, useEffect } from "react";
 import AppHeader from "../app-header/app-header"
 import Main from "../main/main";
 import appStyles from "./app.module.css";
-import * as api from '../../utils/Api'
+import * as api from '../../utils/Api';
+
+import { useDispatch } from 'react-redux';
+import { loadInitialIngredients } from "../../services/actions/initial-ingredients";
 
 function App() {
-  const [initialIngridients, setInitiaIngridients] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    api.getIngridients()
-      .then(({isSuccess, data}) => {
-        setInitiaIngridients(data)
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-      });
+    dispatch(loadInitialIngredients ())
   }, [])
 
   return (
     <div className="page text text_type_main-default">
       <AppHeader />
-      <Main
-        initialIngridients={initialIngridients}
-      />
+      <Main/>
     </div>
   );
 }
