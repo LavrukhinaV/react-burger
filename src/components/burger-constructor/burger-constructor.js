@@ -80,7 +80,7 @@ function BurgerConstructor () {
             }
           </ul>
           {constructorIngredients.length === 0 && !constructorBun && 
-          <p className={`${burgerConstructorStyles.note} text text_type_main-medium`}>Перенесите ингдиенты в конструктор</p>
+          <p className={`${burgerConstructorStyles.note} text text_type_main-medium`}>Перенесите ингредиенты в конструктор</p>
           }
           {constructorBun && <ConstructorElement
             type="bottom"
