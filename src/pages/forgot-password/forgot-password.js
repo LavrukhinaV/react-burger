@@ -3,6 +3,7 @@ import AppHeader from "../../components/app-header/app-header";
 import Form from "../../components/form/form";
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from "react";
+import { useAuth } from "../../utils/Auth";
 
 const links = [
   {
@@ -13,20 +14,26 @@ const links = [
 ];
 
 function ForgotPassword() {
-  const [emailInputValue, setEmailInputValue] = useState('');
+  let auth = useAuth();
+
+  const [emailInputValue, setEmailInputValue] = useState({email: ''});
 
   const onEmailInputChange = e => {
-    setEmailInputValue(e.target.value)
+    setEmailInputValue({ ...emailInputValue, [e.target.name]: e.target.value })
+  }
+
+  const handleForgotPassword = () => {
+    auth.forgotPassword(emailInputValue)
   }
 
   return (
     <div className={`${forgotPasswordStyles.page} text text_type_main-default`}>
       <AppHeader />
       <main className={forgotPasswordStyles.content}>
-        <Form title="Восстановление пароля" buttonText="Восстановить" links={links}>
+        <Form title="Восстановление пароля" buttonText="Восстановить" links={links} onButtonClick={handleForgotPassword}>
           <EmailInput
             onChange={onEmailInputChange}
-            value={emailInputValue}
+            value={emailInputValue.email}
             name={'email'}
             isIcon={false}
             extraClass="mb-6"
