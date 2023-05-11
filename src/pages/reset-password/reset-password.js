@@ -3,7 +3,7 @@ import AppHeader from "../../components/app-header/app-header";
 import Form from "../../components/form/form";
 import { PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from "react";
-import { useAuth } from "../../utils/Auth";
+import { resetPassword } from "../../utils/Auth";
 
 const links = [
   {
@@ -14,8 +14,6 @@ const links = [
 ];
 
 function ResetPassword() {
-  let auth = useAuth();
-
   const [passwordInputValue, setPasswordInputValue] = useState( "")
   const [tokenInputValue, setTokenInputValue] = useState("")
 
@@ -28,8 +26,8 @@ function ResetPassword() {
   }
 
   const handleResetPassword = () => {
-    console.log()
-    auth.resetPassword({ "password": passwordInputValue, "token": tokenInputValue })
+    console.log('reset')
+    resetPassword({ "password": passwordInputValue, "token": tokenInputValue })
   }
 
   return (

@@ -3,6 +3,8 @@ import registerStyles from './register.module.css';
 import AppHeader from "../../components/app-header/app-header";
 import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from "../../components/form/form";
+import { signUp } from "../../services/actions/auth";
+import { useDispatch } from 'react-redux';
 
 const links = [
   {
@@ -13,6 +15,8 @@ const links = [
 ];
 
 function Register() {
+  const dispatch = useDispatch();
+
   const [nameInputValue, setNameInputValue] = useState('')
   const [emailInputValue, setEmailInputValue] = useState('');
   const [passwordInputValue, setPasswordInputValue] = useState('')
@@ -28,12 +32,21 @@ function Register() {
   const onNamedInputChange = e => {
     setNameInputValue(e.target.value)
   }
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    dispatch(signUp({
+      "email": emailInputValue,
+      "password": passwordInputValue,
+      "name": nameInputValue
+    }));
+  }
   
   return (
     <div className={`${registerStyles.page} text text_type_main-default`}>
       <AppHeader />
       <main className={registerStyles.content}>
-        <Form title="Регистрация" buttonText="Зарегистрироваться" links={links}>
+        <Form title="Регистрация" buttonText="Зарегистрироваться" links={links} onButtonClick={handleRegister}>
           <Input
             type={'text'}
             placeholder={'Имя'}

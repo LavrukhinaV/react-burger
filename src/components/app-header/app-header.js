@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import headerStyles from './app-header.module.css'; 
 import { Logo, ListIcon, BurgerIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -16,10 +17,10 @@ function AppHeader() {
           </button>
         </nav>
         <Logo />
-        <button className={`${headerStyles.link} pb-4 pt-4`}>
+        <Link className={`${headerStyles.link} pb-4 pt-4`} to="/profile">
           <ProfileIcon type="primary" />
           <p className="text text_type_main-default ml-2">Личный кабинет</p>
-        </button>
+        </Link>
       </div>
     </header>
   )

@@ -3,7 +3,7 @@ import AppHeader from "../../components/app-header/app-header";
 import Form from "../../components/form/form";
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from "react";
-import { useAuth } from "../../utils/Auth";
+import { forgotPassword } from "../../utils/Auth";
 
 const links = [
   {
@@ -14,8 +14,6 @@ const links = [
 ];
 
 function ForgotPassword() {
-  let auth = useAuth();
-
   const [emailInputValue, setEmailInputValue] = useState({email: ''});
 
   const onEmailInputChange = e => {
@@ -23,7 +21,7 @@ function ForgotPassword() {
   }
 
   const handleForgotPassword = () => {
-    auth.forgotPassword(emailInputValue)
+    forgotPassword(emailInputValue)
   }
 
   return (

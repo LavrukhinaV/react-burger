@@ -22,7 +22,6 @@ export const getIngredients = () => {
 };
 
 export const submitOrder = (ingredients) => {
-
   return request(`${BASE_URL}/orders`, {
     method: 'POST',
     headers: {
