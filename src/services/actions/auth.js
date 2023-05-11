@@ -1,6 +1,7 @@
-import { authorize, register, updateToken, logOut } from "../../utils/Auth";
+import { authorize, register, updateToken, logOut, getUser, updateUser } from "../../utils/Auth";
 import { setCookie, getCookie, deleteCookie } from "../../utils/cookie";
 
+// export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const SET_USER_SUCCESS = "SET_USER_SUCCESS";
 export const SET_USER_FAILED = "SET_USER_FAILED";
 export const SET_USER_REQUEST = "SET_USER_REQUEST";
@@ -10,7 +11,7 @@ export const SET_LOGOUT_REQUEST = "SET_LOGOUT_REQUEST";
 export const SET_LOGOUT_SUCCESS = "SET_LOGOUT_SUCCESS";
 export const SET_LOGOUT_FAILED = "SET_LOGOUT_FAILED";
 
-export const refreshToken = () => {
+export const refreshToken = () => dispatch => {
   updateToken(getCookie("refreshToken")).then(res => {
     console.log("refreshToken", res)
     let authToken = res.accessToken.split('Bearer ')[1];
@@ -18,11 +19,59 @@ export const refreshToken = () => {
 
     setCookie('authToken', authToken);
     setCookie('refreshToken', refreshToken);
+    dispatch(getUserData())
   })
   .catch(e => {
-    console.log(e)
+    dispatch({
+      type: SET_USER_FAILED,
+    })
   })
 };
+
+export const getUserData = () => (dispatch) => {
+  dispatch({
+    type: SET_USER_REQUEST,
+  })
+  getUser(getCookie("authToken"))
+  .then(res => {
+    dispatch({
+      type: SET_USER_SUCCESS,
+      paylod: res,
+    })
+  })
+  .catch((err) => {
+    if (err === "jwt expired") {
+      dispatch(refreshToken())
+    } else {
+      dispatch({
+        type: SET_USER_FAILED,
+      })
+    }
+  });
+}
+
+export const updateUserData = (data) => (dispatch) => {
+  dispatch({
+    type: SET_USER_REQUEST,
+  })
+  updateUser(getCookie("authToken"), data)
+  .then(res => {
+    dispatch({
+      type: SET_USER_SUCCESS,
+      paylod: res,
+    })
+  })
+  .catch((err) => {
+    console.log(err)
+    if (err === "jwt expired") {
+      dispatch(refreshToken())
+    } else {
+      dispatch({
+        type: SET_USER_FAILED,
+      })
+    }
+  });
+}
 
 export const signIn = (data) => (dispatch) => {
   dispatch({

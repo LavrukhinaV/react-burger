@@ -1,10 +1,11 @@
 const BASE_URL = 'https://norma.nomoreparties.space/api';
 
-const checkResponse = (res) => {
+const checkResponse = async (res) => {
   if (res.ok) {
-    return res.json();
+    return await res.json();
   }
-  return Promise.reject(res.status)
+  let response = await res.json()
+  return Promise.reject(`${response.message}`);
 };
 
 export const updateToken = async(token) => {
@@ -15,6 +16,32 @@ export const updateToken = async(token) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({"token": token})
+  });
+  return checkResponse(res);
+};
+
+export const getUser = async (token) => {
+  const res = await fetch(`${BASE_URL}/auth/user`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  return checkResponse(res);
+};
+
+export const updateUser = async (token, data) => {
+  console.log("token", token)
+  const res = await fetch(`${BASE_URL}/auth/user`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(data)
   });
   return checkResponse(res);
 };

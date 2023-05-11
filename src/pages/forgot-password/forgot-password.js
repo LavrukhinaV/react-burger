@@ -4,6 +4,7 @@ import Form from "../../components/form/form";
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from "react";
 import { forgotPassword } from "../../utils/Auth";
+import { useNavigate } from "react-router-dom";
 
 const links = [
   {
@@ -14,6 +15,7 @@ const links = [
 ];
 
 function ForgotPassword() {
+  const navigate = useNavigate();
   const [emailInputValue, setEmailInputValue] = useState({email: ''});
 
   const onEmailInputChange = e => {
@@ -22,6 +24,7 @@ function ForgotPassword() {
 
   const handleForgotPassword = () => {
     forgotPassword(emailInputValue)
+    navigate('/reset-password', { replace: true, state: {from: 'forgot-password'} });
   }
 
   return (

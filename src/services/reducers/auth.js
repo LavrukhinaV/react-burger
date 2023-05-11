@@ -71,6 +71,7 @@ export const userReduser = (state = userInitialState, action) => {
         user: {},
         logoutSuccess: true,
         logoutFailed: false,
+        loginSuccess: false,
       }
     }
 
