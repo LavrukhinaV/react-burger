@@ -15,7 +15,7 @@ function Profile() {
   const [form, setForm] = useState({
     email: user.email ?? "",
     name: user.name ?? "",
-    // password: '12345'
+    password: ''
   })
 
   const [disabledFields, setDisabledFields] = useState(['name', 'email', 'password'])
@@ -25,8 +25,8 @@ function Profile() {
     const value = e.target.value
 
     setForm({
-        ...form,
-        [name]: value
+      ...form,
+      [name]: value
     })
   }
 
@@ -34,7 +34,7 @@ function Profile() {
     setForm({
       email: user.email,
       name: user.name,
-      // password: ''
+      password: ''
     })
     setDisabledFields(['name', 'email', 'password'])
   }
@@ -43,9 +43,13 @@ function Profile() {
     setDisabledFields(disabledFields.includes(name) ? disabledFields.filter(fieldName => fieldName !== name) : [...disabledFields, name])
   }
 
-  const handleFormsubmit = () => {
+  const handleFormSubmit = () => {
     dispatch(updateUserData(form));
     setDisabledFields(['name', 'email', 'password'])
+    setForm({
+      ...form,
+      password: ''
+    })
   }
 
   function objectsEqual(o1, o2) {
@@ -64,9 +68,9 @@ function Profile() {
     }
     return true;
   }
+  
+  user.password = ""
   const isUserDataChange = objectsEqual(user, form)
-  console.log(isUserDataChange)
-  console.log('user', user, "form", form)
 
   return (
     <div className={`${profileStyles.page} text text_type_main-default`}>
@@ -103,17 +107,18 @@ function Profile() {
             onIconClick={() => toggleFieldAvailability('email')}
           />
           <PasswordInput
-            // onChange={onPasswordInputChange}
-            // value={passwordInputValue}
+            onChange={changeForm}
+            value={form.password}
             name={'password'}
             extraClass="mb-6"
+            icon="EditIcon"
           />
           {!isUserDataChange &&
             <div className={profileStyles.buttons}>
               <Button htmlType="button" type="secondary" size="medium" onClick={resetForm}>
                 Отмена
               </Button>
-              <Button htmlType="button" type="primary" size="medium" onClick={handleFormsubmit}>
+              <Button htmlType="button" type="primary" size="medium" onClick={handleFormSubmit}>
                 Сохранить
               </Button>
             </div>
