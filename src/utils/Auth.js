@@ -33,7 +33,6 @@ export const getUser = async (token) => {
 };
 
 export const updateUser = async (token, data) => {
-  console.log("token", token)
   const res = await fetch(`${BASE_URL}/auth/user`, {
     method: 'PATCH',
     headers: {

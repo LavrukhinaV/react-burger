@@ -4,28 +4,19 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import PropTypes from 'prop-types';
 import { ingredientType } from "../../utils/types";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_SELECTED_INGREDIENT, DELETE_SELECTED_INGREDIENT } from "../../services/actions/selected-ingredient";
-import { getInitialIngredients, getSelectedIngredient } from "../../services/selectors/initial-ingredients";
+import { SET_SELECTED_INGREDIENT } from "../../services/actions/selected-ingredient";
+import { getInitialIngredients } from "../../services/selectors/initial-ingredients";
 import { getConstructorIngredients, getConstructorBun } from "../../services/selectors/burger-constructor";
 
 function BurgerIngredients (){
   const dispatch = useDispatch();
 
   const initialIngredients = useSelector(getInitialIngredients);
-  const selectedIngredient = useSelector(getSelectedIngredient);
   const constructorIngredients = useSelector(getConstructorIngredients);
   const constructorBun = useSelector(getConstructorBun);
 
   const [current, setCurrent] = useState("Булки");
-
-  function closeModal () {
-    dispatch({
-      type: DELETE_SELECTED_INGREDIENT
-    });
-  };
 
   function handleIngredientClick(item) {
     dispatch({
@@ -120,11 +111,6 @@ function BurgerIngredients (){
           </ul>
         </div>
       </section>
-      {Object.keys(selectedIngredient).length !== 0 && (
-        <Modal onClose={closeModal} isOpen={!!selectedIngredient}>
-          <IngredientDetails ingredient={selectedIngredient}/>
-        </Modal>
-      )}
     </>
   )
 };

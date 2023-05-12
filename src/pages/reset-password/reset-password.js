@@ -19,26 +19,29 @@ function ResetPassword() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [passwordInputValue, setPasswordInputValue] = useState( "")
-  const [tokenInputValue, setTokenInputValue] = useState("")
+  const [form, setForm] = useState({
+    token: "",
+    password: ""
+  })
 
-  const onPasswordInputChange = e => {
-    setPasswordInputValue(e.target.value)
-  }
+  const changeForm = (e) => {
+    const name = e.target.name
+    const value = e.target.value
 
-  const onTokenInputChange = e => {
-    setTokenInputValue(e.target.value)
+    setForm({
+      ...form,
+      [name]: value
+    })
   }
 
   const handleResetPassword = () => {
-    console.log('reset')
-    resetPassword({ "password": passwordInputValue, "token": tokenInputValue })
+    resetPassword({ "password": form.password, "token": form.token })
     navigate('/login')
   }
 
   useEffect(() => {
     if (!location.state) {
-      navigate("/", { replace: true})
+      navigate("/forgot-password", { replace: true})
     }
   }, [])
 
@@ -49,8 +52,8 @@ function ResetPassword() {
         <main className={resetPasswordStyles.content}>
           <Form title="Восстановление пароля" buttonText="Сохранить" links={links} onButtonClick={handleResetPassword}>
             <PasswordInput
-              onChange={onPasswordInputChange}
-              value={passwordInputValue}
+              onChange={changeForm}
+              value={form.password}
               name={'password'}
               extraClass="mb-6"
               placeholder={'Введите новый пароль'}
@@ -58,8 +61,8 @@ function ResetPassword() {
             <Input
               type={'text'}
               placeholder={'Введите код из письма'}
-              onChange={onTokenInputChange}
-              value={tokenInputValue}
+              onChange={changeForm}
+              value={form.token}
               name={'token'}
               error={false}
               errorText={'Ошибка'}

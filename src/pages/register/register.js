@@ -5,6 +5,7 @@ import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-
 import Form from "../../components/form/form";
 import { signUp } from "../../services/actions/auth";
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 const links = [
   {
@@ -16,30 +17,32 @@ const links = [
 
 function Register() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
-  const [nameInputValue, setNameInputValue] = useState('')
-  const [emailInputValue, setEmailInputValue] = useState('');
-  const [passwordInputValue, setPasswordInputValue] = useState('')
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    name: ""
+  })
 
-  const onEmailInputChange = e => {
-    setEmailInputValue(e.target.value)
-  }
+  const changeForm = (e) => {
+    const name = e.target.name
+    const value = e.target.value
 
-  const onPasswordInputChange = e => {
-    setPasswordInputValue(e.target.value)
-  }
-
-  const onNamedInputChange = e => {
-    setNameInputValue(e.target.value)
+    setForm({
+      ...form,
+      [name]: value
+    })
   }
 
   const handleRegister = (e) => {
     e.preventDefault();
     dispatch(signUp({
-      "email": emailInputValue,
-      "password": passwordInputValue,
-      "name": nameInputValue
+      "email": form.email,
+      "password": form.password,
+      "name": form.name
     }));
+    navigate("/login")
   }
   
   return (
@@ -50,8 +53,8 @@ function Register() {
           <Input
             type={'text'}
             placeholder={'Имя'}
-            onChange={onNamedInputChange}
-            value={nameInputValue}
+            onChange={changeForm}
+            value={form.name}
             name={'name'}
             error={false}
             errorText={'Ошибка'}
@@ -59,15 +62,15 @@ function Register() {
             extraClass="mb-6"
           />
           <EmailInput
-            onChange={onEmailInputChange}
-            value={emailInputValue}
+            onChange={changeForm}
+            value={form.email}
             name={'email'}
             isIcon={false}
             extraClass="mb-6"
           />
           <PasswordInput
-            onChange={onPasswordInputChange}
-            value={passwordInputValue}
+            onChange={changeForm}
+            value={form.password}
             name={'password'}
             extraClass="mb-6"
           />

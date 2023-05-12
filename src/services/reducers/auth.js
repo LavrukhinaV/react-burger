@@ -5,22 +5,31 @@ import {
 } from "../actions/auth";
 
 const userInitialState = {
+  isAuthChecked: false,
+
   user: {},
-  loginSuccess: false,
-  loginFailed: false,
-  registerSuccess: false,
+
+  registerSuccess: null,
   registerFailed: false,
-  logoutSuccess: false,
+
+  loginSuccess: null,
+  loginFailed: false,
+
+  getUserSuccess: null,
+  getUserFailed: false,
+
+  logoutSuccess: null,
   logoutFailed: false,
 };
 
 export const userReduser = (state = userInitialState, action) => {
   switch(action.type) {
+
     case SET_USER_SUCCESS: {
       return {
         ...state,
         user: action.paylod.user,
-        loginSuccess: true,
+        loginRequest: true,
         loginFailed: false,
       }
     }
@@ -28,15 +37,13 @@ export const userReduser = (state = userInitialState, action) => {
     case SET_USER_REQUEST: {
       return {
         ...state,
-        loginSuccess: true,
-        loginFailed: false,
+        isAuthChecked: true
       }
     }
 
     case SET_USER_FAILED: {
       return {
         ...state,
-        loginSuccess: false,
         loginFailed: true,
       }
     }
@@ -52,7 +59,6 @@ export const userReduser = (state = userInitialState, action) => {
     case SET_REGISTER_FAILED: {
       return {
         ...state,
-        registerSuccess: false,
         registerFailed: true,
       }
     }
@@ -60,8 +66,7 @@ export const userReduser = (state = userInitialState, action) => {
     case SET_LOGOUT_REQUEST: {
       return {
         ...state,
-        logoutSuccess: true,
-        logoutFailed: false,
+        logoutRequest: true,
       }
     }
 
@@ -69,7 +74,7 @@ export const userReduser = (state = userInitialState, action) => {
       return {
         ...state,
         user: {},
-        logoutSuccess: true,
+        logoutRequest: true,
         logoutFailed: false,
         loginSuccess: false,
       }
@@ -78,7 +83,6 @@ export const userReduser = (state = userInitialState, action) => {
     case SET_LOGOUT_FAILED: {
       return {
         ...state,
-        logoutSuccess: false,
         logoutFailed: true,
       }
     }

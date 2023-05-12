@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from "react";
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loadInitialIngredients } from "./services/actions/initial-ingredients";
 import Main from "./pages/main/main";
@@ -8,12 +8,24 @@ import Register from "./pages/register/register";
 import ForgotPassword from "./pages/forgot-password/forgot-password";
 import ResetPassword from "./pages/reset-password/reset-password";
 import Profile from "./pages/profile/profile";
-import ProtectedRouteElement from "./components/protected-route-element/protected-route-element";
+import ProtectedRoute from "./components/protected-route/protected-route";
 import { getUserData } from "./services/actions/auth";
 import OrderHistory from "./pages/order-history/order-history";
+import IngredientDetails from "./components/ingredient-details/ingredient-details";
+import Modal from "./components/modal/modal";
+import IngredientPage from "./pages/ingredient-page/ingredient-page";
+import Orders from "./pages/orders/orders";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const background = location.state && location.state.background;
+
+  const closeModal = () => {
+    navigate(-1)
+  }
 
   useEffect(() => {
     dispatch(loadInitialIngredients ());
@@ -21,17 +33,28 @@ function App() {
   }, [])
 
   return (
-    <BrowserRouter>
-      <Routes>
+    <>
+      <Routes location={background || location}>
         <Route path="/" element={<Main />}/>
-        <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} path="/login"/>}/>
-        <Route path="/order-history" element={<ProtectedRouteElement element={<OrderHistory />} path="/login"/>}/>
-        <Route path="/login" element={<ProtectedRouteElement element={<Login />} path="/" protectedFromAuthorized={true}/>}/>
-        <Route path="/register" element={<ProtectedRouteElement element={<Register />} path="/" protectedFromAuthorized={true}/>}/>
-        <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword />} path="/" protectedFromAuthorized={true}/>}/>
-        <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} path="/" protectedFromAuthorized={true}/>}/>
+        <Route path="/orders" element={<Orders />}/>
+        <Route path="/profile" element={<ProtectedRoute element={<Profile />} protectedFromAuthorized={false}/>}/>
+        <Route path="/order-history" element={<ProtectedRoute element={<OrderHistory />} protectedFromAuthorized={false}/> }/>
+        <Route path="/login" element={<ProtectedRoute element={<Login />} protectedFromAuthorized={true}/>}/>
+        <Route path="/register" element={<ProtectedRoute element={<Register />} protectedFromAuthorized={true}/>}/>
+        <Route path="/forgot-password" element={<ProtectedRoute element={<ForgotPassword />} protectedFromAuthorized={true}/>}/>
+        <Route path="/reset-password" element={<ProtectedRoute element={<ResetPassword />} protectedFromAuthorized={true}/>}/>
+        <Route path={'/ingredients/:id'} element={<IngredientPage/>}/>
       </Routes>
-    </BrowserRouter>
+      {background && (
+        <Routes>
+          <Route path={'/ingredients/:id'} element={
+            <Modal onClose={closeModal}>
+              <IngredientDetails/>
+            </Modal>
+          }/>
+        </Routes>
+      )}
+    </>
   );
 }
 

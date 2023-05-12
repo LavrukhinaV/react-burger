@@ -1,13 +1,15 @@
 import profileMenuStyles from './profile-menu.module.css';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { signOut } from "../../services/actions/auth";
 import { useDispatch } from 'react-redux';
 
 function ProfileMenu() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleLogoutClick = () => {
     dispatch(signOut());
+    navigate("/profile")
   }
   return (
     <nav className={profileMenuStyles.menu}>
@@ -27,15 +29,12 @@ function ProfileMenu() {
       >
         История заказов
       </NavLink>
-      <NavLink
-        to="/login"
+      <button
         onClick={handleLogoutClick}
-        className={({ isActive }) =>
-          `${profileMenuStyles.link} text_type_main-medium ${isActive ? "text_color_primary" : "text_color_inactive"}`
-        }
+        className={`${profileMenuStyles.link} text_type_main-medium text_color_inactive`}
       >
         Выход
-      </NavLink>
+      </button>
     </nav>
   )
 };

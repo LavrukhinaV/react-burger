@@ -1,19 +1,19 @@
 import { authorize, register, updateToken, logOut, getUser, updateUser } from "../../utils/Auth";
 import { setCookie, getCookie, deleteCookie } from "../../utils/cookie";
 
-// export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
+export const SET_USER_REQUEST = "SET_USER_REQUEST";
 export const SET_USER_SUCCESS = "SET_USER_SUCCESS";
 export const SET_USER_FAILED = "SET_USER_FAILED";
-export const SET_USER_REQUEST = "SET_USER_REQUEST";
-export const SET_REGISTER_FAILED = "SET_REGISTER_FAILED";
+
 export const SET_REGISTER_SUCCESS = "SET_REGISTER_SUCCESS";
+export const SET_REGISTER_FAILED = "SET_REGISTER_FAILED";
+
 export const SET_LOGOUT_REQUEST = "SET_LOGOUT_REQUEST";
 export const SET_LOGOUT_SUCCESS = "SET_LOGOUT_SUCCESS";
 export const SET_LOGOUT_FAILED = "SET_LOGOUT_FAILED";
 
 export const refreshToken = () => dispatch => {
   updateToken(getCookie("refreshToken")).then(res => {
-    console.log("refreshToken", res)
     let authToken = res.accessToken.split('Bearer ')[1];
     let refreshToken = res.refreshToken;
 
@@ -62,7 +62,6 @@ export const updateUserData = (data) => (dispatch) => {
     })
   })
   .catch((err) => {
-    console.log(err)
     if (err === "jwt expired") {
       dispatch(refreshToken())
     } else {
@@ -99,13 +98,9 @@ export const signIn = (data) => (dispatch) => {
 };
 
 export const signUp = (data) => (dispatch) => {
-  dispatch({
-    type: SET_REGISTER_SUCCESS,
-  })
-
   register(data).then(res => {
     dispatch({
-      type: SET_USER_SUCCESS,
+      type: SET_REGISTER_SUCCESS,
       paylod: res,
     })
   })
@@ -127,11 +122,12 @@ export const signOut = () => (dispatch) => {
     deleteCookie('refreshToken');
     dispatch({
       type: SET_LOGOUT_SUCCESS,
-    })
+    });
+    
   })
   .catch((err) => {
     dispatch({
       type: SET_LOGOUT_FAILED,
     })
-  });
+  })
 };

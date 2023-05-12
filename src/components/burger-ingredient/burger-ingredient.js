@@ -3,8 +3,10 @@ import burgerIngredientStyles from './burger-ingredient.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientType } from "../../utils/types";
 import { useDrag } from "react-dnd";
+import { Link, useLocation } from "react-router-dom";
 
 function BurgerIngredient({item, onClick, count}) {
+  const location = useLocation();
 
   function handleIngredientClick() {
     onClick(item)
@@ -16,7 +18,11 @@ function BurgerIngredient({item, onClick, count}) {
   });
 
   return (
-    <>
+    <Link
+      className={`${burgerIngredientStyles.link} text_color_primary`}
+      to={`/ingredients/${item._id}`}
+      state={{background: location}}
+    >
       {count !== 0 ? <Counter count={count} size="default" extraClass="m-1" /> : ""}
       <article className={`${burgerIngredientStyles.ingredient}`} onClick={handleIngredientClick} ref={dragRef}>
         <img className="mb-1" src={item.image} alt={item.name}/>
@@ -28,7 +34,7 @@ function BurgerIngredient({item, onClick, count}) {
         </div>
         <h3 className="text text_type_main-default">{item.name}</h3>
       </article>
-    </>
+    </Link>
   );
 }
 

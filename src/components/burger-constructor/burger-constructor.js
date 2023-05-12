@@ -9,9 +9,15 @@ import ConstructorIngredient from "../constructor-ingredient/constructor-ingredi
 import { useDrop } from "react-dnd";
 import { addConstructorIngredient, setConstructorBun } from "../../services/actions/burger-constructor";
 import { getConstructorIngredients, getConstructorBun } from "../../services/selectors/burger-constructor";
+import { getUser } from "../../services/selectors/auth";
+import { useNavigate } from "react-router-dom";
 
 function BurgerConstructor () {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  const user = useSelector(getUser);
+
   const constructorIngredients = useSelector(getConstructorIngredients);
   const constructorBun = useSelector(getConstructorBun);
 
@@ -42,8 +48,12 @@ function BurgerConstructor () {
 
 
   function handleOrderSubmit() {
-    dispatch(getOrderDate(orderIngredients()));
-    setModalOrderDetailsOpen(true);
+    if (user.name) {
+      dispatch(getOrderDate(orderIngredients()));
+      setModalOrderDetailsOpen(true);
+    } else {
+      navigate("/login")
+    }
   };
 
   const [, dropTarget] = useDrop({

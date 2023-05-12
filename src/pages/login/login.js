@@ -22,22 +22,26 @@ const links = [
 function Login() {
   const dispatch = useDispatch();
 
-  const [emailInputValue, setEmailInputValue] = useState('');
-  const [passwordInputValue, setPasswordInputValue] = useState('')
+  const [form, setForm] = useState({
+    email: "",
+    password: ""
+  })
 
-  const onEmailInputChange = e => {
-    setEmailInputValue(e.target.value)
-  }
+  const changeForm = (e) => {
+    const name = e.target.name
+    const value = e.target.value
 
-  const onPasswordInputChange = e => {
-    setPasswordInputValue(e.target.value)
+    setForm({
+      ...form,
+      [name]: value
+    })
   }
 
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(signIn({
-      "email": emailInputValue,
-      "password": passwordInputValue
+      "email": form.email,
+      "password": form.password
     }));
   }
 
@@ -47,15 +51,15 @@ function Login() {
       <main className={loginStyles.content}>
         <Form title="Вход" buttonText="Войти" links={links} onButtonClick={handleLogin}>
           <EmailInput
-            onChange={onEmailInputChange}
-            value={emailInputValue}
+            onChange={changeForm}
+            value={form.email}
             name={'email'}
             isIcon={false}
             extraClass="mb-6"
           />
           <PasswordInput
-            onChange={onPasswordInputChange}
-            value={passwordInputValue}
+            onChange={changeForm}
+            value={form.password}
             name={'password'}
             extraClass="mb-6"
           />

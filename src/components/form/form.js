@@ -1,6 +1,8 @@
 import formStyles from './form.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { linksType } from "../../utils/types";
 
 function Form({ children, title, buttonText, links, onButtonClick }) {
 
@@ -20,5 +22,13 @@ function Form({ children, title, buttonText, links, onButtonClick }) {
     </form>
   );
 }
+
+Form.propTypes = {
+  title: PropTypes.string,
+  buttonText: PropTypes.string,
+  onButtonClick: PropTypes.func,
+  links: PropTypes.arrayOf(linksType),
+  children: PropTypes.node
+};
 
 export default Form;
