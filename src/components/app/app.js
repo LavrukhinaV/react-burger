@@ -1,20 +1,22 @@
+import appStyles from "./app.module.css";
 import { useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loadInitialIngredients } from "./services/actions/initial-ingredients";
-import Main from "./pages/main/main";
-import Login from "./pages/login/login";
-import Register from "./pages/register/register";
-import ForgotPassword from "./pages/forgot-password/forgot-password";
-import ResetPassword from "./pages/reset-password/reset-password";
-import Profile from "./pages/profile/profile";
-import ProtectedRoute from "./components/protected-route/protected-route";
-import { getUserData } from "./services/actions/auth";
-import OrderHistory from "./pages/order-history/order-history";
-import IngredientDetails from "./components/ingredient-details/ingredient-details";
-import Modal from "./components/modal/modal";
-import IngredientPage from "./pages/ingredient-page/ingredient-page";
-import Orders from "./pages/orders/orders";
+import { loadInitialIngredients } from "../../services/actions/initial-ingredients";
+import Main from "../../pages/main/main";
+import Login from "../../pages/login/login";
+import Register from "../../pages/register/register";
+import ForgotPassword from "../../pages/forgot-password/forgot-password";
+import ResetPassword from "../../pages/reset-password/reset-password";
+import Profile from "../../pages/profile/profile";
+import ProtectedRoute from "../protected-route/protected-route";
+import { getUserData } from "../../services/actions/auth";
+import OrderHistory from "../../pages/order-history/order-history";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
+import IngredientPage from "../../pages/ingredient-page/ingredient-page";
+import Orders from "../../pages/orders/orders";
+import AppHeader from "../app-header/app-header";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,7 +35,8 @@ function App() {
   }, [])
 
   return (
-    <>
+    <div className={`${appStyles.page} text text_type_main-default`}>
+      <AppHeader />
       <Routes location={background || location}>
         <Route path="/" element={<Main />}/>
         <Route path="/orders" element={<Orders />}/>
@@ -54,7 +57,7 @@ function App() {
           }/>
         </Routes>
       )}
-    </>
+    </div>
   );
 }
 

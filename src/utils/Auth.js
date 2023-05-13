@@ -1,12 +1,4 @@
-const BASE_URL = 'https://norma.nomoreparties.space/api';
-
-const checkResponse = async (res) => {
-  if (res.ok) {
-    return await res.json();
-  }
-  let response = await res.json()
-  return Promise.reject(`${response.message}`);
-};
+import { BASE_URL, checkResponse } from "./Api";
 
 export const updateToken = async(token) => {
   const res = await fetch(`${BASE_URL}/auth/token`, {

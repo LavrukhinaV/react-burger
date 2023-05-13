@@ -1,9 +1,18 @@
 import ingredientDetailsStyles from './ingredient-details.module.css';
 import { useSelector } from "react-redux";
-import { getSelectedIngredient } from "../../services/selectors/initial-ingredients";
+import { getInitialIngredients } from "../../services/selectors/initial-ingredients";
+import { useParams } from "react-router-dom";
+import Preloader from "../preloader/preloader";
 
 function IngredientDetails () {
-  const ingredient = useSelector(getSelectedIngredient);
+
+  const ingredients = useSelector(getInitialIngredients);
+  let { id } = useParams();
+  const ingredient = ingredients.find(ingredient => ingredient._id === id)
+
+  if (ingredients.length == 0) {
+    return (<Preloader />)
+  } 
 
   return (
     <div className={ingredientDetailsStyles.container}>

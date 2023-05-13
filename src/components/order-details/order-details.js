@@ -1,9 +1,14 @@
 import orderDetailsStyles from './order-details.module.css';
 import { useSelector } from 'react-redux';
 import { getOrderDate } from "../../services/selectors/order-details";
+import Preloader from "../preloader/preloader";
 
 function OrderDetails() {
   const orderDate = useSelector(getOrderDate);
+
+  if (Object.keys(orderDate).length == 0) {
+    return (<Preloader />)
+  }
 
   return (
     orderDate &&

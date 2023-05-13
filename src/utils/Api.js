@@ -1,10 +1,11 @@
-const BASE_URL = 'https://norma.nomoreparties.space/api';
+export const BASE_URL = 'https://norma.nomoreparties.space/api';
 
-function checkResponse (res) {
+export const checkResponse = async (res) => {
   if (res.ok) {
-    return res.json();
+    return await res.json();
   }
-  return Promise.reject(res.status)
+  let response = await res.json()
+  return Promise.reject(`${response.message}`);
 };
 
 function request(url, options) {

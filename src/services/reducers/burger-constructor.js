@@ -2,7 +2,8 @@ import {
   UPDATE_CONSTRUCTOR_INGREDIENTS,
   ADD_CONSTRUCTOR_INGREDIENT,
   DELETE_CONSTRUCTOR_INGREDIENT,
-  SET_CONSTRUCTOR_BUN
+  SET_CONSTRUCTOR_BUN,
+  REMOVE_CONSTRUCTOR
 } from "../actions/burger-constructor";
 
 const constructorInitialState = {
@@ -49,6 +50,14 @@ export const constructorReduser = (state = constructorInitialState, action) => {
       return {
         ...state,
         bun: action.bun
+      }
+    }
+
+    case REMOVE_CONSTRUCTOR: {
+      return {
+        ...state,
+        ingredients: [],
+        bun: null
       }
     }
     

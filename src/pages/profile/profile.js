@@ -1,5 +1,4 @@
 import profileStyles from './profile.module.css';
-import AppHeader from "../../components/app-header/app-header";
 import ProfileMenu from "../../components/profile-menu/profile-menu";
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from "react-redux";
@@ -8,31 +7,22 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateUserData } from "../../services/actions/auth";
 import { objectsEqual } from "../../utils/utils";
+import { useForm } from "../../hooks/useForm";
 
 function Profile() {
   const user = useSelector(getUser);
   const dispatch = useDispatch();
 
-  const [form, setForm] = useState({
+  const {values, handleChange, setValues} = useForm({
     email: user.email ?? "",
     name: user.name ?? "",
     password: ''
-  })
+  });
 
   const [disabledFields, setDisabledFields] = useState(['name', 'email', 'password'])
 
-  const changeForm = (e) => {
-    const name = e.target.name
-    const value = e.target.value
-
-    setForm({
-      ...form,
-      [name]: value
-    })
-  }
-
   const resetForm = () => {
-    setForm({
+    setValues({
       email: user.email,
       name: user.name,
       password: ''
@@ -45,71 +35,68 @@ function Profile() {
   }
 
   const handleFormSubmit = () => {
-    dispatch(updateUserData(form));
+    dispatch(updateUserData(values));
     setDisabledFields(['name', 'email', 'password'])
-    setForm({
-      ...form,
+    setValues({
+      ...values,
       password: ''
     })
   }
 
   user.password = ""
-  const isUserDataChange = objectsEqual(user, form)
+  const isUserDataChange = objectsEqual(user, values)
 
   return (
-    <div className={`${profileStyles.page} text text_type_main-default`}>
-      <AppHeader />
-      <main className={`${profileStyles.content} mt-30`}>
-        <div>
-          <ProfileMenu />
-          <p className="text_color_inactive mt-20">В этом разделе вы можете изменить свои персональные данные</p>
-        </div>
-        <form>
-          <Input
-            type={'text'}
-            placeholder={'Имя'}
-            onChange={changeForm}
-            value={form.name}
-            name={'name'}
-            error={false}
-            errorText={'Ошибка'}
-            size={'default'}
-            icon={'EditIcon'}
-            color={"text_color_inactive"}
-            extraClass={`${profileStyles.input} mb-6`}
-            disabled={disabledFields.includes('name')}
-            onIconClick={() => toggleFieldAvailability('name')}
-          />
-          <EmailInput
-            onChange={changeForm}
-            value={form.email}
-            name={'email'}
-            placeholder={'Логин'}
-            extraClass="mb-6"
-            isIcon={true}
-            disabled={disabledFields.includes('email')}
-            onIconClick={() => toggleFieldAvailability('email')}
-          />
-          <PasswordInput
-            onChange={changeForm}
-            value={form.password}
-            name={'password'}
-            extraClass="mb-6"
-            icon="EditIcon"
-          />
-          {!isUserDataChange &&
-            <div className={profileStyles.buttons}>
-              <Button htmlType="button" type="secondary" size="medium" onClick={resetForm}>
-                Отмена
-              </Button>
-              <Button htmlType="button" type="primary" size="medium" onClick={handleFormSubmit}>
-                Сохранить
-              </Button>
-            </div>
-          }
-        </form>
-      </main>
-    </div>
+    <main className={`${profileStyles.content} mt-30`}>
+      <div>
+        <ProfileMenu />
+        <p className="text_color_inactive mt-20">В этом разделе вы можете изменить свои персональные данные</p>
+      </div>
+      <form>
+        <Input
+          type={'text'}
+          placeholder={'Имя'}
+          onChange={handleChange}
+          value={values.name}
+          name={'name'}
+          error={false}
+          errorText={'Ошибка'}
+          size={'default'}
+          icon={'EditIcon'}
+          color={"text_color_inactive"}
+          extraClass={`${profileStyles.input} mb-6`}
+          disabled={disabledFields.includes('name')}
+          onIconClick={() => toggleFieldAvailability('name')}
+        />
+        <EmailInput
+          onChange={handleChange}
+          value={values.email}
+          name={'email'}
+          placeholder={'Логин'}
+          extraClass="mb-6"
+          isIcon={true}
+          disabled={disabledFields.includes('email')}
+          onIconClick={() => toggleFieldAvailability('email')}
+        />
+        <PasswordInput
+          onChange={handleChange}
+          value={values.password}
+          name={'password'}
+          extraClass="mb-6"
+          icon="EditIcon"
+        />
+        {!isUserDataChange &&
+          <div className={profileStyles.buttons}>
+            <Button htmlType="button" type="secondary" size="medium" onClick={resetForm}>
+              Отмена
+            </Button>
+            <Button htmlType="button" type="primary" size="medium" onClick={handleFormSubmit}>
+              Сохранить
+            </Button>
+          </div>
+        }
+      </form>
+    </main>
   )
 };
 

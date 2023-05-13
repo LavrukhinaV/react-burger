@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import headerStyles from './app-header.module.css'; 
 import { Logo, ListIcon, BurgerIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -33,7 +33,9 @@ function AppHeader() {
             )}
           </NavLink>
         </nav>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <NavLink
           className={({ isActive }) =>
             `${headerStyles.link} p-5 mr-2 ${isActive ? `text_color_primary` : `text_color_inactive`}`
