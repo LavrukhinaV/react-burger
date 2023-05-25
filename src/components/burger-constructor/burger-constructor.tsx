@@ -11,6 +11,7 @@ import { addConstructorIngredient, setConstructorBun } from "../../services/acti
 import { getConstructorIngredients, getConstructorBun } from "../../services/selectors/burger-constructor";
 import { getUser } from "../../services/selectors/auth";
 import { useNavigate } from "react-router-dom";
+import { TIngredientData, TIngredientDataWithUUId } from '../../utils/types';
 
 function BurgerConstructor () {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ function BurgerConstructor () {
 
   const user = useSelector(getUser);
 
-  const constructorIngredients = useSelector(getConstructorIngredients);
+  const constructorIngredients: Array<TIngredientDataWithUUId> = useSelector(getConstructorIngredients);
   const constructorBun = useSelector(getConstructorBun);
 
   const [isModalOrderDetailsOpen, setModalOrderDetailsOpen] = useState(false);
@@ -27,7 +28,7 @@ function BurgerConstructor () {
     setModalOrderDetailsOpen(false)
   };
 
-  const orderIngredients = () => {
+  function orderIngredients (): Array<TIngredientData> {
     const allIngredients = [
       constructorBun._id,
       ...constructorIngredients.map(item => item._id),
@@ -49,6 +50,7 @@ function BurgerConstructor () {
 
   function handleOrderSubmit() {
     if (user.name) {
+      //@ts-ignore
       dispatch(getOrderDate(orderIngredients()));
       setModalOrderDetailsOpen(true);
     } else {
@@ -58,7 +60,7 @@ function BurgerConstructor () {
 
   const [, dropTarget] = useDrop({
     accept: "ingredients",
-    drop(ingredient) {
+    drop(ingredient: TIngredientData) {
       if (ingredient.type !== "bun") {
         dispatch(addConstructorIngredient(ingredient))
       } else {
@@ -103,7 +105,7 @@ function BurgerConstructor () {
         <div className={`${burgerConstructorStyles.container} pr-4`}>
           <p className={`${burgerConstructorStyles.count} mr-10 text text_type_digits-medium`}>
             {price}
-            <CurrencyIcon className={burgerConstructorStyles.container}/>
+            <CurrencyIcon type="primary"/>
           </p>
           <Button disabled={constructorIngredients.length === 0 || !constructorBun} htmlType="button" type="primary" size="large" onClick={handleOrderSubmit}>
             Оформить заказ

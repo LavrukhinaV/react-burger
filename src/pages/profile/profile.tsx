@@ -30,11 +30,12 @@ function Profile() {
     setDisabledFields(['name', 'email', 'password'])
   }
 
-  const toggleFieldAvailability = (name) => {
+  const toggleFieldAvailability = (name: string) => {
     setDisabledFields(disabledFields.includes(name) ? disabledFields.filter(fieldName => fieldName !== name) : [...disabledFields, name])
   }
 
   const handleFormSubmit = () => {
+    //@ts-ignore
     dispatch(updateUserData(values));
     setDisabledFields(['name', 'email', 'password'])
     setValues({
@@ -68,13 +69,13 @@ function Profile() {
           disabled={disabledFields.includes('name')}
           onIconClick={() => toggleFieldAvailability('name')}
         />
-        <EmailInput
+        <Input
           onChange={handleChange}
           value={values.email}
           name={'email'}
           placeholder={'Логин'}
           extraClass="mb-6"
-          isIcon={true}
+          icon={'EditIcon'}
           disabled={disabledFields.includes('email')}
           onIconClick={() => toggleFieldAvailability('email')}
         />

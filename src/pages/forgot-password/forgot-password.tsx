@@ -4,8 +4,9 @@ import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPassword } from "../../utils/Auth";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
+import { TLink } from '../../utils/types';
 
-const links = [
+const links: Array<TLink> = [
   {
     title: "Вспомнили пароль?",
     linkName: "Войти",

@@ -1,4 +1,6 @@
-export function objectsEqual(o1, o2) {
+import { TFormValue, TUserData } from "./types";
+
+export function objectsEqual(o1: TUserData, o2: TFormValue): boolean {
   const entries1 = Object.entries(o1);
   const entries2 = Object.entries(o2);
   if (entries1.length !== entries2.length) {

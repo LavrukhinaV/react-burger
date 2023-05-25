@@ -5,6 +5,7 @@ import Form from "../../components/form/form";
 import { signUp } from "../../services/actions/auth";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import { FormEvent } from "react";
 
 const links = [
   {
@@ -24,8 +25,9 @@ function Register() {
     name: ""
   });
 
-  const handleRegister = (e) => {
+  const handleRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //@ts-ignore
     dispatch(signUp(values));
     navigate("/login")
   }

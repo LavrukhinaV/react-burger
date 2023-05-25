@@ -5,8 +5,9 @@ import { resetPassword } from "../../utils/Auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
+import { TLink } from '../../utils/types';
 
-const links = [
+const links: Array<TLink> = [
   {
     title: "Вспомнили пароль?",
     linkName: "Войти",

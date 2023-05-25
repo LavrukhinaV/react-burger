@@ -34,8 +34,22 @@ export type TIngredientData = {
   type: string,
 };
 
+export type TIngredientDataWithUUId  = TIngredientData & {
+  uuid: string
+};
+
 export type TLink = {
   title: string,
   linkName: string,
   path: string,
+};
+
+export type TUserData = {
+  name: string,
+  email: string,
+  password: string
 }
+
+export type TFormValue = {
+  [key: string]: string
+};
