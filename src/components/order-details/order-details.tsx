@@ -6,7 +6,7 @@ import Preloader from "../preloader/preloader";
 function OrderDetails() {
   const orderDate = useSelector(getOrderDate);
 
-  if (Object.keys(orderDate).length == 0) {
+  if (Object.keys(orderDate).length === 0) {
     return (<Preloader />)
   }
 

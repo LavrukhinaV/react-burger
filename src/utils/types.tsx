@@ -18,4 +18,24 @@ export const linksType = PropTypes.shape({
   title: PropTypes.string,
   linkName: PropTypes.string,
   path: PropTypes.string,
-})
+});
+
+export type TIngredientData = {
+  _id: string,
+  calories: number,
+  carbohydrates: number,
+  fat: number,
+  image: string,
+  image_large: string,
+  image_mobile: string,
+  name: string,
+  price: number,
+  proteins: number,
+  type: string,
+};
+
+export type TLink = {
+  title: string,
+  linkName: string,
+  path: string,
+}

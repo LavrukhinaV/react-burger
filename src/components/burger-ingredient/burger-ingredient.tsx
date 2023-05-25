@@ -1,11 +1,17 @@
-import PropTypes from 'prop-types';
 import burgerIngredientStyles from './burger-ingredient.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientType } from "../../utils/types";
+import { TIngredientData } from "../../utils/types";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
+import { FC } from 'react';
 
-function BurgerIngredient({item, onClick, count}) {
+type BurgerIngredientPropsType = {
+  item: TIngredientData;
+  count: number;
+  onClick: (item: TIngredientData) => void
+};
+
+const BurgerIngredient: FC<BurgerIngredientPropsType> = ({item, onClick, count}) => {
   const location = useLocation();
 
   function handleIngredientClick() {
@@ -37,11 +43,5 @@ function BurgerIngredient({item, onClick, count}) {
     </Link>
   );
 }
-
-BurgerIngredient.propTypes = {
-  item: ingredientType.isRequired,
-  onClick: PropTypes.func,
-  count: PropTypes.number
-};
 
 export default BurgerIngredient;

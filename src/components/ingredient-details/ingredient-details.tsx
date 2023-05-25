@@ -3,18 +3,19 @@ import { useSelector } from "react-redux";
 import { getInitialIngredients } from "../../services/selectors/initial-ingredients";
 import { useParams } from "react-router-dom";
 import Preloader from "../preloader/preloader";
+import { TIngredientData } from '../../utils/types';
 
 function IngredientDetails () {
 
-  const ingredients = useSelector(getInitialIngredients);
+  const ingredients: Array<TIngredientData> = useSelector(getInitialIngredients);
   let { id } = useParams();
-  const ingredient = ingredients.find(ingredient => ingredient._id === id)
+  const ingredient: TIngredientData | undefined = ingredients.find(ingredient => ingredient._id === id)
 
-  if (ingredients.length == 0) {
+  if (ingredients.length === 0) {
     return (<Preloader />)
   } 
 
-  return (
+  if (ingredient) return (
     <div className={ingredientDetailsStyles.container}>
       <h2 className={`${ingredientDetailsStyles.title} text text_type_main-large mt-2`}>Детали ингредиента</h2>
       <img src={ingredient.image_large} alt={ingredient.name}/>

@@ -2,9 +2,14 @@ import { Navigate, useLocation } from "react-router-dom";
 import { getUser, isAuth } from "../../services/selectors/auth";
 import { useSelector } from "react-redux";
 import Preloader from "../preloader/preloader";
-import PropTypes from 'prop-types';
+import { FC, ReactElement } from "react";
 
-export function ProtectedRoute({ element, protectedFromAuthorized }) {
+type ProtectedRoutePropsType = {
+  element: ReactElement;
+  protectedFromAuthorized: boolean;
+};
+
+const ProtectedRoute: FC<ProtectedRoutePropsType> = ({ element, protectedFromAuthorized }) => {
   const loggedIn = useSelector(isAuth)
   const user = useSelector(getUser);
   const location = useLocation();
@@ -23,11 +28,6 @@ export function ProtectedRoute({ element, protectedFromAuthorized }) {
   }
 
   return element;
-};
-
-ProtectedRoute.propTypes = {
-  protectedFromAuthorized: PropTypes.bool,
-  element: PropTypes.object
 };
 
 export default ProtectedRoute;

@@ -1,10 +1,18 @@
 import formStyles from './form.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
-import { linksType } from "../../utils/types";
+import { TLink } from "../../utils/types";
+import { FC, PropsWithChildren } from "react";
+import { FormEvent } from 'react';
 
-function Form({ children, title, buttonText, links, onFormSubmit }) {
+type FormPropsType = {
+  title: string;
+  buttonText: string;
+  links: Array<TLink>;
+  onFormSubmit: (event: FormEvent<HTMLFormElement>) => void;
+};
+
+const Form: FC<PropsWithChildren<FormPropsType>> = ({ children, title, buttonText, links, onFormSubmit }) => {
 
   return (
     <form className={formStyles.form} onSubmit={onFormSubmit}>
@@ -22,13 +30,5 @@ function Form({ children, title, buttonText, links, onFormSubmit }) {
     </form>
   );
 }
-
-Form.propTypes = {
-  title: PropTypes.string,
-  buttonText: PropTypes.string,
-  onFormSubmit: PropTypes.func,
-  links: PropTypes.arrayOf(linksType),
-  children: PropTypes.node
-};
 
 export default Form;

@@ -7,6 +7,7 @@ function ProfileMenu() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
+  
   const handleLogoutClick = () => {
     dispatch(signOut());
     navigate("/profile")
