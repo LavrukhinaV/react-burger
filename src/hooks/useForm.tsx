@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { TFormValue } from "../utils/types";
 
-
 export function useForm(inputValues: TFormValue={}) {
   const [values, setValues] = useState<TFormValue>(inputValues);
 
@@ -10,4 +9,4 @@ export function useForm(inputValues: TFormValue={}) {
     setValues({...values, [name]: value});
   };
   return {values, handleChange, setValues};
-}
+};

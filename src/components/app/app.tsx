@@ -30,7 +30,9 @@ function App() {
   }
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(loadInitialIngredients ());
+    //@ts-ignore
     dispatch(getUserData())
   }, [])
 

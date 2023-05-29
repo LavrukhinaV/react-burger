@@ -1,25 +1,3 @@
-import PropTypes from 'prop-types';
-
-export const ingredientType =  PropTypes.shape({
-  _id: PropTypes.string,
-  calories: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  fat: PropTypes.number,
-  image: PropTypes.string,
-  image_large: PropTypes.string,
-  image_mobile: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  proteins: PropTypes.number,
-  type: PropTypes.string,
-});
-
-export const linksType = PropTypes.shape({
-  title: PropTypes.string,
-  linkName: PropTypes.string,
-  path: PropTypes.string,
-});
-
 export type TIngredientData = {
   _id: string,
   calories: number,
@@ -47,9 +25,30 @@ export type TLink = {
 export type TUserData = {
   name: string,
   email: string,
-  password: string
+}
+
+export type TFullUserData = TUserData & {
+  password: string,
+}
+
+export type TAuthData = {
+  name: string,
+  password: string,
 }
 
 export type TFormValue = {
   [key: string]: string
 };
+
+export type TOrderData = {
+  name: string,
+  order: {
+    number: 6257
+  },
+  success: boolean
+};
+
+export type TTokensData = {
+  accessToken: string,
+  refreshToken: string,
+}

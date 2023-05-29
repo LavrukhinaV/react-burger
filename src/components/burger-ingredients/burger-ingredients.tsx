@@ -2,8 +2,7 @@ import { useState, useRef } from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import PropTypes from 'prop-types';
-import { TIngredientData, ingredientType } from "../../utils/types";
+import { TIngredientData } from "../../utils/types";
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_SELECTED_INGREDIENT } from "../../services/actions/selected-ingredient";
 import { getInitialIngredients } from "../../services/selectors/initial-ingredients";
@@ -35,8 +34,6 @@ function BurgerIngredients (){
   const bunTopRef = useRef<HTMLDivElement | null>(null);
   const sauceTopRef = useRef<HTMLDivElement | null>(null);
   const mainTopRef = useRef<HTMLDivElement | null>(null);
-
-  console.log(containerTopRef)
 
   const onIngredientsScroll = () => {
     const containerTop = containerTopRef.current!.getBoundingClientRect().top;
@@ -114,12 +111,6 @@ function BurgerIngredients (){
         </div>
       </section>
     </>
-  )
-};
-
-BurgerIngredients.propTypes = {
-  initialIngredients: PropTypes.arrayOf(
-    ingredientType
   )
 };
 

@@ -9,6 +9,7 @@ function ProfileMenu() {
 
   
   const handleLogoutClick = () => {
+    //@ts-ignore
     dispatch(signOut());
     navigate("/profile")
   }

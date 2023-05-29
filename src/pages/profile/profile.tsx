@@ -1,6 +1,6 @@
 import profileStyles from './profile.module.css';
 import ProfileMenu from "../../components/profile-menu/profile-menu";
-import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from "react-redux";
 import { getUser } from "../../services/selectors/auth";
 import { useState } from "react";

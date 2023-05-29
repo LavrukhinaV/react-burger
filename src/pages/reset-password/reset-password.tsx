@@ -35,7 +35,7 @@ function ResetPassword() {
     }
   }, [])
 
-  if (location.state && location.state.from === "forgot-password") {
+  if (location.state && location.state.from === "forgot-password") 
     return (
       <main className={resetPasswordStyles.content}>
         <Form title="Восстановление пароля" buttonText="Сохранить" links={links} onFormSubmit={handleResetPassword}>
@@ -59,8 +59,10 @@ function ResetPassword() {
           />
         </Form>
       </main>
-    );
-  }
+    )
+    else {
+      return null;
+   }
 }
 
 export default ResetPassword;
