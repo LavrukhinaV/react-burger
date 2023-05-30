@@ -3,10 +3,9 @@ import modalOverlayStyles from './modal-overlay.module.css';
 
 type ModalOverlayPropsType = {
   onClose: () => void;
-  isOpen: boolean;
 };
 
-const ModalOverlay: FC<ModalOverlayPropsType> =({onClose, isOpen}) => {
+const ModalOverlay: FC<ModalOverlayPropsType> =({ onClose }) => {
 
   return (
     <div

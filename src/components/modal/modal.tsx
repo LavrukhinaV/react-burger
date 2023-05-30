@@ -8,10 +8,9 @@ const modalRoot = document.getElementById("react-modals") as Element | DocumentF
 
 type ModalPropsType = {
   onClose: () => void;
-  isOpen: boolean;
 };
 
-const Modal: FC<PropsWithChildren<ModalPropsType>> = ({children, onClose, isOpen}) => {
+const Modal: FC<PropsWithChildren<ModalPropsType>> = ({ children, onClose }) => {
 
   useEffect(() => {
     function closeByEscape(evt: KeyboardEvent) {
@@ -37,7 +36,7 @@ const Modal: FC<PropsWithChildren<ModalPropsType>> = ({children, onClose, isOpen
           </button>
           {children}
         </div>
-        <ModalOverlay onClose={onClose} isOpen={isOpen}/>
+        <ModalOverlay onClose={onClose}/>
       </>,
       modalRoot
     )

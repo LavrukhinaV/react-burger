@@ -4,8 +4,10 @@ import Form from "../../components/form/form";
 import { signIn } from "../../services/actions/auth";
 import { useDispatch } from 'react-redux';
 import { useForm } from "../../hooks/useForm";
+import { FormEvent } from 'react';
+import { TLink } from '../../utils/types';
 
-const links = [
+const links: Array<TLink> = [
   {
     title: "Вы — новый пользователь?",
     linkName: "Зарегистрироваться",
@@ -26,8 +28,9 @@ function Login() {
     password: ""
   });
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+     //@ts-ignore
     dispatch(signIn({
       "email": values.email,
       "password": values.password

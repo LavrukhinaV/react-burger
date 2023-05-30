@@ -5,8 +5,9 @@ import { resetPassword } from "../../utils/Auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
+import { TLink } from '../../utils/types';
 
-const links = [
+const links: Array<TLink> = [
   {
     title: "Вспомнили пароль?",
     linkName: "Войти",
@@ -34,7 +35,7 @@ function ResetPassword() {
     }
   }, [])
 
-  if (location.state && location.state.from === "forgot-password") {
+  if (location.state && location.state.from === "forgot-password") 
     return (
       <main className={resetPasswordStyles.content}>
         <Form title="Восстановление пароля" buttonText="Сохранить" links={links} onFormSubmit={handleResetPassword}>
@@ -58,8 +59,10 @@ function ResetPassword() {
           />
         </Form>
       </main>
-    );
-  }
+    )
+    else {
+      return null;
+   }
 }
 
 export default ResetPassword;

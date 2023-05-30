@@ -5,10 +5,11 @@ import { useParams } from "react-router-dom";
 import Preloader from "../preloader/preloader";
 import { TIngredientData } from '../../utils/types';
 
-function IngredientDetails () {
+
+function IngredientDetails() {
 
   const ingredients: Array<TIngredientData> = useSelector(getInitialIngredients);
-  let { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const ingredient: TIngredientData | undefined = ingredients.find(ingredient => ingredient._id === id)
 
   if (ingredients.length === 0) {
@@ -40,6 +41,9 @@ function IngredientDetails () {
       </ul>
     </div>
   )
+  else {
+    return null;
+ }
 }
 
 export default IngredientDetails;
