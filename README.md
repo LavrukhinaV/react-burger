@@ -9,8 +9,9 @@
 * Экран авторизации, где пользователь может войти в личный кабинет, зарегистрироваться или восстановить пароль.
 
 ### Стек технологий :
-`React.js` `TypeScript` `Reduxt`  `WebSocket`
+`React.js` `TypeScript` `Reduxt`  `WebSocket` `React-dnd` `Cypress` `Jest`
 
 ### Запуск проекта:
 `npm i` — установка зависимостей
+
 `npm run start` — запускает приложение
