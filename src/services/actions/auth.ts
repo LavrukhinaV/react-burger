@@ -1,18 +1,57 @@
 import { authorize, register, updateToken, logOut, getUser, updateUser } from "../../utils/Auth";
 import { setCookie, getCookie, deleteCookie } from "../../utils/cookie";
+import { TAuthData, TFullUserData } from "../../utils/types";
+import { AppDispatch, AppThunkAction } from "../types/types";
+import {
+  SET_USER_SUCCESS, SET_USER_FAILED, SET_USER_REQUEST,
+  SET_REGISTER_SUCCESS, SET_REGISTER_FAILED,
+  SET_LOGOUT_REQUEST, SET_LOGOUT_SUCCESS, SET_LOGOUT_FAILED
+} from "../constants/auth";
 
-export const SET_USER_REQUEST = "SET_USER_REQUEST";
-export const SET_USER_SUCCESS = "SET_USER_SUCCESS";
-export const SET_USER_FAILED = "SET_USER_FAILED";
+export interface ISetUserSuccess {
+  paylod: any;
+  readonly type: typeof SET_USER_SUCCESS;
+};
 
-export const SET_REGISTER_SUCCESS = "SET_REGISTER_SUCCESS";
-export const SET_REGISTER_FAILED = "SET_REGISTER_FAILED";
+export interface ISetUserFailed {
+  readonly type: typeof SET_USER_FAILED;
+};
 
-export const SET_LOGOUT_REQUEST = "SET_LOGOUT_REQUEST";
-export const SET_LOGOUT_SUCCESS = "SET_LOGOUT_SUCCESS";
-export const SET_LOGOUT_FAILED = "SET_LOGOUT_FAILED";
+export interface ISetUserRequest {
+  readonly type: typeof SET_USER_REQUEST;
+};
 
-export const refreshToken = () => dispatch => {
+export interface ISetRegisterSuccess {
+  readonly type: typeof SET_REGISTER_SUCCESS;
+};
+
+export interface ISetRegisterFailed {
+  readonly type: typeof SET_REGISTER_FAILED;
+};
+
+export interface ISetLogoutRequest {
+  readonly type: typeof SET_LOGOUT_REQUEST;
+};
+
+export interface ISetLogoutSuccess {
+  readonly type: typeof SET_LOGOUT_SUCCESS;
+};
+
+export interface ISetLogoutFailed {
+  readonly type: typeof SET_LOGOUT_FAILED;
+};
+
+export type TAuthActions = 
+  | ISetUserSuccess
+  | ISetUserFailed
+  | ISetUserRequest
+  | ISetRegisterSuccess
+  | ISetRegisterFailed
+  | ISetLogoutRequest
+  | ISetLogoutSuccess
+  | ISetLogoutFailed
+
+export const refreshToken = (): AppThunkAction => (dispatch: AppDispatch) => {
   updateToken(getCookie("refreshToken")).then(res => {
     let authToken = res.accessToken.split('Bearer ')[1];
     let refreshToken = res.refreshToken;
@@ -28,7 +67,7 @@ export const refreshToken = () => dispatch => {
   })
 };
 
-export const getUserData = () => (dispatch) => {
+export const getUserData = (): AppThunkAction => (dispatch: AppDispatch) => {
   dispatch({
     type: SET_USER_REQUEST,
   })
@@ -50,7 +89,7 @@ export const getUserData = () => (dispatch) => {
   });
 }
 
-export const updateUserData = (data) => (dispatch) => {
+export const updateUserData = (data: TFullUserData): AppThunkAction => (dispatch: AppDispatch) => {
   dispatch({
     type: SET_USER_REQUEST,
   })
@@ -72,7 +111,7 @@ export const updateUserData = (data) => (dispatch) => {
   });
 }
 
-export const signIn = (data) => (dispatch) => {
+export const signIn = (data: TAuthData): AppThunkAction => (dispatch: AppDispatch) => {
   dispatch({
     type: SET_USER_REQUEST,
   })
@@ -97,7 +136,7 @@ export const signIn = (data) => (dispatch) => {
   });
 };
 
-export const signUp = (data) => (dispatch) => {
+export const signUp = (data: TFullUserData): AppThunkAction => (dispatch: AppDispatch) => {
   register(data).then(res => {
     dispatch({
       type: SET_REGISTER_SUCCESS,
@@ -111,7 +150,7 @@ export const signUp = (data) => (dispatch) => {
   });
 };
 
-export const signOut = () => (dispatch) => {
+export const signOut = (): AppThunkAction => (dispatch: AppDispatch) => {
   dispatch({
     type: SET_LOGOUT_REQUEST,
   })

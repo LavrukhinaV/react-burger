@@ -6,7 +6,7 @@ type TResponse = {
   message?: string
 }
 
-export const updateToken = async(token: string): Promise<TResponse & TTokensData> => {
+export const updateToken = async(token: string | undefined): Promise<TResponse & TTokensData> => {
   const res = await fetch(`${BASE_URL}/auth/token`, {
     method: 'POST',
     headers: {
@@ -18,7 +18,7 @@ export const updateToken = async(token: string): Promise<TResponse & TTokensData
   return checkResponse(res);
 };
 
-export const getUser = async (token: string): Promise<TUserData>  => {
+export const getUser = async (token: string | undefined): Promise<TUserData>  => {
   const res = await fetch(`${BASE_URL}/auth/user`, {
     method: 'GET',
     headers: {
@@ -27,10 +27,10 @@ export const getUser = async (token: string): Promise<TUserData>  => {
       'Authorization': `Bearer ${token}`,
     },
   });
-  return checkResponse<TUserData>(res);
+  return checkResponse(res);
 };
 
-export const updateUser = async (token: string, data: TFormValue): Promise<TResponse & {user: TUserData}> => {
+export const updateUser = async (token: string | undefined, data: TFormValue): Promise<TResponse & {user: TUserData}> => {
   const res = await fetch(`${BASE_URL}/auth/user`, {
     method: 'PATCH',
     headers: {
@@ -67,7 +67,7 @@ export const authorize = async (data: TAuthData): Promise<TResponse & {user: TUs
   return checkResponse(res);
 };
 
-export const logOut = async (token: string): Promise<TResponse>  => {
+export const logOut = async (token: string | undefined): Promise<TResponse>  => {
   const res = await fetch(`${BASE_URL}/auth/logout`, {
     method: 'POST',
     headers: {

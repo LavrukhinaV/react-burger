@@ -1,16 +1,26 @@
-import {
-  UPDATE_ORDER_DATE,
-  UPDATE_ORDER_SUCCESS,
-  UPDATE_ORDER_FAILED
-} from "../actions/order-details";
+import { UPDATE_ORDER_DATE, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAILED } from "../constants/order-details";
+import { TOrderDetailsActions } from "../actions/order-details";
+import { TOrderData } from "../../utils/types";
 
-const orderInitialState = {
-  orderDate: {},
+type TOrderInitialState = {
+  orderDate: TOrderData
+  orderRequestSuccess: boolean,
+  orderRequestFailed: boolean,
+}
+
+const orderInitialState: TOrderInitialState = {
+  orderDate: {
+    name: "",
+    order: {
+      number: 6257
+    },
+    success: false
+  },
   orderRequestSuccess: false,
   orderRequestFailed: false,
 };
 
-export const orderReduser = (state = orderInitialState, action) => {
+export const orderReduser = (state = orderInitialState, action: TOrderDetailsActions): TOrderInitialState => {
   switch(action.type) {
     case UPDATE_ORDER_SUCCESS: {
       return {

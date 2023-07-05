@@ -32,7 +32,7 @@ export type TFullUserData = TUserData & {
 }
 
 export type TAuthData = {
-  name: string,
+  email: string,
   password: string,
 }
 

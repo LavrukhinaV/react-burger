@@ -1,17 +1,36 @@
+import { TIngredientData, TIngredientDataWithUUId } from "../../utils/types";
+import { TBurgerConstructorActions } from "../actions/burger-constructor";
 import {
   UPDATE_CONSTRUCTOR_INGREDIENTS,
   ADD_CONSTRUCTOR_INGREDIENT,
   DELETE_CONSTRUCTOR_INGREDIENT,
   SET_CONSTRUCTOR_BUN,
   REMOVE_CONSTRUCTOR
-} from "../actions/burger-constructor";
+} from "../constants/burger-constructor";
 
-const constructorInitialState = {
+type TConstructorState = {
+  ingredients: Array<TIngredientDataWithUUId>;
+  bun: TIngredientData
+}
+
+const constructorInitialState: TConstructorState = {
   ingredients: [],
-  bun: null
+  bun: {
+    _id: "",
+    calories: 0,
+    carbohydrates: 0,
+    fat: 0,
+    image: "",
+    image_large: "",
+    image_mobile: "",
+    name: "",
+    price: 0,
+    proteins: 0,
+    type: ""
+  },
 };
 
-export const constructorReduser = (state = constructorInitialState, action) => {
+export const constructorReduser = (state = constructorInitialState, action: TBurgerConstructorActions): TConstructorState => {
   switch(action.type) {
     case UPDATE_CONSTRUCTOR_INGREDIENTS: {
 
@@ -57,7 +76,19 @@ export const constructorReduser = (state = constructorInitialState, action) => {
       return {
         ...state,
         ingredients: [],
-        bun: null
+        bun: {
+          _id: "",
+          calories: 0,
+          carbohydrates: 0,
+          fat: 0,
+          image: "",
+          image_large: "",
+          image_mobile: "",
+          name: "",
+          price: 0,
+          proteins: 0,
+          type: ""
+        },
       }
     }
     

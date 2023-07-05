@@ -28,7 +28,7 @@ function BurgerConstructor () {
     setModalOrderDetailsOpen(false)
   };
 
-  function orderIngredients (): Array<TIngredientData> {
+  function orderIngredients (): Array<TIngredientData> |Array<string> {
     const allIngredients = [
       constructorBun._id,
       ...constructorIngredients.map(item => item._id),

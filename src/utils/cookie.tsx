@@ -1,4 +1,4 @@
-export function getCookie(name: string): string | undefined {
+export function getCookie(name: "refreshToken" | "authToken"): string | undefined {
   const matches = document.cookie.match(
     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
   );

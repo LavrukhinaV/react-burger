@@ -2,15 +2,24 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED
-} from "../actions/initial-ingredients";
+} from "../constants/initial-ingredients";
 
-const initialIngredientState = {
+import { TInitialIngredientsActions } from "../actions/initial-ingredients";
+import { TIngredientData } from "../../utils/types";
+
+type TInitialIngredientsState = {
+  ingredients: Array<TIngredientData>;
+  ingredientsRequestSuccess: boolean;
+  ingredientsRequestFailed: boolean;
+}
+
+const initialIngredientsState: TInitialIngredientsState = {
   ingredients: [],
   ingredientsRequestSuccess: false,
   ingredientsRequestFailed: false,
 };
 
-export const initialIngredientReduser = (state = initialIngredientState, action) => {
+export const initialIngredientsReduser = (state = initialIngredientsState, action: TInitialIngredientsActions): TInitialIngredientsState => {
   switch(action.type) {
 
     case GET_INGREDIENTS_SUCCESS: {

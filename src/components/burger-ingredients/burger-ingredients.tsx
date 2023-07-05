@@ -4,7 +4,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { TIngredientData } from "../../utils/types";
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_SELECTED_INGREDIENT } from "../../services/actions/selected-ingredient";
+import { SET_SELECTED_INGREDIENT } from "../../services/constants/selected-ingredient";
 import { getInitialIngredients } from "../../services/selectors/initial-ingredients";
 import { getConstructorIngredients, getConstructorBun } from "../../services/selectors/burger-constructor";
 
@@ -12,6 +12,7 @@ function BurgerIngredients (){
   const dispatch = useDispatch();
 
   const initialIngredients: Array<TIngredientData> = useSelector(getInitialIngredients);
+
   const constructorIngredients: Array<TIngredientData> = useSelector(getConstructorIngredients);
   const constructorBun = useSelector(getConstructorBun);
 
