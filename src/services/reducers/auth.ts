@@ -4,7 +4,7 @@ import {
   SET_LOGOUT_REQUEST, SET_LOGOUT_SUCCESS, SET_LOGOUT_FAILED
 } from "../constants/auth";
 
-import { TAuthActions } from "../actions/auth";
+import { TAuthActions } from "../../services/actions/auth";
 import { TFullUserData } from "../../utils/types";
 
 type TUserInitialState = {

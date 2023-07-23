@@ -12,7 +12,6 @@ import { useForm } from "../../hooks/useForm";
 
 function Profile() {
   const user = useSelector(getUser);
-  console.log(user)
   const dispatch = useDispatch();
 
   const {values, handleChange, setValues} = useForm({

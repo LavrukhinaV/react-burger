@@ -1,5 +1,5 @@
 import { UPDATE_ORDER_DATE, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAILED } from "../constants/order-details";
-import { TOrderDetailsActions } from "../actions/order-details";
+import { TOrderDetailsActions } from "../../services/actions/order-details";
 import { TOrderData } from "../../utils/types";
 
 type TOrderInitialState = {

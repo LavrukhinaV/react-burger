@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export type TIngredientData = {
   _id: string,
   calories: number,
@@ -51,4 +53,21 @@ export type TOrderData = {
 export type TTokensData = {
   accessToken: string,
   refreshToken: string,
+}
+
+export type TFeedOrder= {
+  ingredients: Array<string>,
+  _id: string,
+  name: string,
+  status: string,
+  number: number,
+  createdAt: string,
+  updatedAt: string
+}
+
+export type TFeedOrders = {
+  success: boolean,
+  orders: Array<TFeedOrder>,
+  total: number,
+  totalToday: number
 }

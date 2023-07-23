@@ -4,7 +4,7 @@ import {
   GET_INGREDIENTS_FAILED
 } from "../constants/initial-ingredients";
 
-import { TInitialIngredientsActions } from "../actions/initial-ingredients";
+import { TInitialIngredientsActions } from "../../services/actions/initial-ingredients";
 import { TIngredientData } from "../../utils/types";
 
 type TInitialIngredientsState = {

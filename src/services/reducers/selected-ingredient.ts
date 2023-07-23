@@ -1,4 +1,4 @@
-import { SET_SELECTED_INGREDIENT, DELETE_SELECTED_INGREDIENT } from "../constants/selected-ingredient";
+import { SET_SELECTED_INGREDIENT, DELETE_SELECTED_INGREDIENT } from "../../services/constants/selected-ingredient";
 import { TSelectedIngredientActions } from "../actions/selected-ingredient";
 import { TIngredientData } from "../../utils/types";
 

@@ -31,8 +31,6 @@ export const loadInitialIngredients = (): AppThunkAction => (dispatch: AppDispat
   })
 
   getIngredients().then(res => {
-
-    console.log('res', res)
     dispatch({
       type: GET_INGREDIENTS_SUCCESS,
       paylod: res,

@@ -1,5 +1,5 @@
 import { TIngredientData, TIngredientDataWithUUId } from "../../utils/types";
-import { TBurgerConstructorActions } from "../actions/burger-constructor";
+import { TBurgerConstructorActions } from "../../services/actions/burger-constructor";
 import {
   UPDATE_CONSTRUCTOR_INGREDIENTS,
   ADD_CONSTRUCTOR_INGREDIENT,

@@ -1,7 +1,7 @@
 import { submitOrder } from "../../utils/Api";
 import { REMOVE_CONSTRUCTOR } from "../constants/burger-constructor";
 import { TIngredientData } from "../../utils/types";
-import { AppDispatch, AppThunkAction } from "../types/types";
+import { AppDispatch, AppThunkAction } from "../types/types"
 import { TOrderData } from "../../utils/types";
 
 import {

@@ -21,11 +21,22 @@
   border-radius: 100px;
   background:  #131316;
   background: linear-gradient(45deg, #801AB2 0%, #4C4CFF 100%);
+  margin-left: -10px;
 }
 
-.ingredient div {
+.ingredientWrapper {
   background:  #131316;
   border-radius: 100px;
+  max-width: 64px;
+  display: flex;
+  aspect-ratio: 1;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.ingredientWrapperDisabled {
+  filter: brightness(.5);
 }
 
 .total {
@@ -38,4 +49,12 @@
 .status {
   grid-column-start: 1;
   grid-column-end: 3;
+}
+
+.count {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
 }
