@@ -24,7 +24,7 @@ function AppHeader() {
             className={({ isActive }) =>
               `${headerStyles.link} p-5 mr-2 ${isActive ? `text_color_primary` : `text_color_inactive`}`
             }
-            to="/orders">
+            to="/feed">
             {({ isActive }) => (
               <>
                 <ListIcon type={isActive ? "primary" : "secondary"} />

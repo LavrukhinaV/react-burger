@@ -15,8 +15,9 @@ import OrderHistory from "../../pages/order-history/order-history";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import IngredientPage from "../../pages/ingredient-page/ingredient-page";
-import Orders from "../../pages/orders/orders";
+import Feed from "../../pages/feed/feed";
 import AppHeader from "../app-header/app-header";
+import Order from "../../pages/order/order";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,7 +42,8 @@ function App() {
       <AppHeader />
       <Routes location={background || location}>
         <Route path="/" element={<Main />}/>
-        <Route path="/orders" element={<Orders />}/>
+        <Route path="/feed" element={<Feed />}/>
+        <Route path="/feed/id" element={<Order />}/>
         <Route path="/profile" element={<ProtectedRoute element={<Profile />} protectedFromAuthorized={false}/>}/>
         <Route path="/order-history" element={<ProtectedRoute element={<OrderHistory />} protectedFromAuthorized={false}/> }/>
         <Route path="/login" element={<ProtectedRoute element={<Login />} protectedFromAuthorized={true}/>}/>
