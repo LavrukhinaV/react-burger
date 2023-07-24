@@ -43,7 +43,7 @@ function IngredientDetails() {
   )
   else {
     return null;
- }
+  }
 }
 
 export default IngredientDetails;

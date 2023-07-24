@@ -1,5 +1,3 @@
-import { type } from "os";
-
 export type TIngredientData = {
   _id: string,
   calories: number,
@@ -59,7 +57,7 @@ export type TFeedOrder= {
   ingredients: Array<string>,
   _id: string,
   name: string,
-  status: string,
+  status: OrderStatus,
   number: number,
   createdAt: string,
   updatedAt: string
@@ -70,4 +68,18 @@ export type TFeedOrders = {
   orders: Array<TFeedOrder>,
   total: number,
   totalToday: number
+}
+
+export enum OrderStatus {
+  done = 'done',
+  pending = 'pending'
+}
+
+export function formatOrderStatus(orderStatus: OrderStatus): string {
+  switch (orderStatus) {
+    case OrderStatus.done:
+      return 'Выполнен'
+    case OrderStatus.pending:
+      return 'Создан'
+  }
 }

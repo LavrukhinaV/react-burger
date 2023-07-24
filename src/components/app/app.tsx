@@ -17,7 +17,8 @@ import Modal from "../modal/modal";
 import IngredientPage from "../../pages/ingredient-page/ingredient-page";
 import Feed from "../../pages/feed/feed";
 import AppHeader from "../app-header/app-header";
-import Order from "../../pages/order/order";
+import OrderPage from "../../pages/order-page/order-page";
+import Order from "../order/order";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ function App() {
       <Routes location={background || location}>
         <Route path="/" element={<Main />}/>
         <Route path="/feed" element={<Feed />}/>
-        <Route path="/feed/id" element={<Order />}/>
+        <Route path={'/feed/:id'} element={<OrderPage/>}/>
         <Route path="/profile" element={<ProtectedRoute element={<Profile />} protectedFromAuthorized={false}/>}/>
         <Route path="/order-history" element={<ProtectedRoute element={<OrderHistory />} protectedFromAuthorized={false}/> }/>
         <Route path="/login" element={<ProtectedRoute element={<Login />} protectedFromAuthorized={true}/>}/>
@@ -57,6 +58,11 @@ function App() {
           <Route path={'/ingredients/:id'} element={
             <Modal onClose={closeModal}>
               <IngredientDetails/>
+            </Modal>
+          }/>
+          <Route path={'/feed/:id'} element={
+            <Modal onClose={closeModal}>
+              <Order/>
             </Modal>
           }/>
         </Routes>

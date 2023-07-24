@@ -1,0 +1,63 @@
+.order {
+  display: flex;
+  flex-direction: column;
+}
+
+.order h1 {
+  text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
+  display: flex;
+  gap: 8px;
+}
+
+.ingredients {
+  padding-right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+.ingredients li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ingredient {
+  padding: 2px;
+  border-radius: 100px;
+  background:  #131316;
+  background: linear-gradient(45deg, #801AB2 0%, #4C4CFF 100%);
+}
+
+.ingredientWrapper {
+  background:  #131316;
+  border-radius: 100px;
+  max-width: 64px;
+  display: flex;
+  aspect-ratio: 1;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ingredientName {
+  flex: 1;
+}

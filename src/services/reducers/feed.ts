@@ -9,7 +9,7 @@ import { TWSActions } from '../actions/ws';
 
 type TFeedState = {
   wsConnected: boolean,
-  orders?: TFeedOrder[]
+  orders: TFeedOrder[]
   total?: number,
   totalToday?: number,
   error?: Event,
