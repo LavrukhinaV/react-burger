@@ -1,7 +1,7 @@
 import appStyles from "./app.module.css";
 import { useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "../../services/hooks/hooks";
 import { loadInitialIngredients } from "../../services/actions/initial-ingredients";
 import Main from "../../pages/main/main";
 import Login from "../../pages/login/login";
@@ -32,11 +32,9 @@ function App() {
   }
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(loadInitialIngredients ());
-    //@ts-ignore
     dispatch(getUserData())
-  }, [])
+  }, [dispatch])
 
   return (
     <div className={`${appStyles.page} text text_type_main-default`}>

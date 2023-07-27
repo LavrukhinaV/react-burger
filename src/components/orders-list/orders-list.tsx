@@ -1,10 +1,13 @@
-import { useSelector } from "react-redux";
 import OrderCard from "../order-card/order-card";
 import ordersListStyles from "./orders-list.module.css"
-import { getFeedOrders } from "../../services/selectors/feed";
+import { TFeedOrder } from "../../utils/types";
+import { FC } from "react";
 
-function OrdersList () {
-  const orders = useSelector(getFeedOrders);
+type OrdersListPropsType = {
+  orders?: TFeedOrder[];
+};
+
+const OrdersList: FC<OrdersListPropsType> = ({ orders }) => {
 
   return (
     <div className={`${ordersListStyles.list} custom-scroll`}>

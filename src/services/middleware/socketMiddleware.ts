@@ -16,6 +16,8 @@ type TFeedWSActions = {
 export const socketMiddleware = (wsActions: TFeedWSActions): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
+        let isConnected: boolean = false;
+        let reconnectTimer: number = 0;
 
     return next => (action) => {
       const { dispatch } = store;
@@ -23,7 +25,6 @@ export const socketMiddleware = (wsActions: TFeedWSActions): Middleware => {
       const {
         wsInit,
         wsClose,
-        // wsSendMessage,
         onOpen,
         onClose,
         onError,
@@ -33,30 +34,36 @@ export const socketMiddleware = (wsActions: TFeedWSActions): Middleware => {
         socket = new WebSocket(payload);
       }
       if (socket) {
-                // функция, которая вызывается при открытии сокета
         socket.onopen = event => {
+          isConnected = true;
           dispatch({ type: onOpen, payload: event });
         };
-                // функция, которая вызывается при ошибке соединения
         socket.onerror = event => {
           dispatch({ type: onError, payload: event });
         };
-
-                // функция, которая вызывается при получения события от сервера
         socket.onmessage = event => {
           const { data } = event;
           const parsedData = JSON.parse(data)
           dispatch({ type: onMessage, payload: parsedData });
         };
-                // функция, которая вызывается при закрытии соединения
         socket.onclose = event => {
+          if (event.code !== 100) {
+            dispatch({ type: onError, payload: event });
+          }
           dispatch({ type: onClose, payload: event });
-        };
 
+          if (isConnected) {
+            reconnectTimer = window.setTimeout(() => {
+              dispatch({ type: onOpen, payload: event });
+            }, 3000)
+          }
+        };
       }
 
       if (wsClose && type === wsClose && socket) {
-          socket.close()
+        clearTimeout(reconnectTimer)
+        isConnected = false;
+        socket.close();
       }
       next(action);
     };

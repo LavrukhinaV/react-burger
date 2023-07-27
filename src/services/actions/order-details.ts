@@ -1,6 +1,5 @@
 import { submitOrder } from "../../utils/Api";
 import { REMOVE_CONSTRUCTOR } from "../constants/burger-constructor";
-import { TIngredientData } from "../../utils/types";
 import { AppDispatch, AppThunkAction } from "../types/types"
 import { TOrderData } from "../../utils/types";
 
@@ -9,6 +8,7 @@ import {
   UPDATE_ORDER_SUCCESS,
   UPDATE_ORDER_FAILED
 } from "../constants/order-details";
+import { getCookie } from "../../utils/cookie";
 
 export interface IUpdateOrderDate {
   readonly type: typeof UPDATE_ORDER_DATE;
@@ -28,18 +28,18 @@ export type TOrderDetailsActions =
   | IUpdateOrderSuccess
   | IUpdateOrderFailed
 
-export const getOrderDate = (ingredients: Array<TIngredientData>): AppThunkAction => (dispatch: AppDispatch) => {
+export const getOrderDate = (ingredients: Array<string>): AppThunkAction => (dispatch: AppDispatch) => {
   dispatch({
     type: UPDATE_ORDER_DATE,
   })
 
-  submitOrder(ingredients).then(res => {
+  submitOrder(ingredients, getCookie("authToken")).then(res => {
+    dispatch({
+      type: REMOVE_CONSTRUCTOR
+    })
     dispatch({
       type: UPDATE_ORDER_SUCCESS,
       payload: res,
-    })
-    dispatch({
-      type: REMOVE_CONSTRUCTOR
     })
   })
   .catch((err) => {

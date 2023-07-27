@@ -1,27 +1,59 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import orderStyles from './order.module.css'
 import { useSelector } from 'react-redux';
-import { getFeedOrders } from '../../services/selectors/feed';
 import { useParams } from 'react-router-dom';
 import { TFeedOrder, TIngredientData, formatOrderStatus } from '../../utils/types';
 import Preloader from '../preloader/preloader';
 import { getInitialIngredients } from '../../services/selectors/initial-ingredients';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { FEED_CONNECTION_CLOSE, FEED_CONNECTION_INIT } from '../../services/constants/ws';
+import { BURGER_API_WSS_FEED_ALL } from '../../utils/constants';
+import { getFeedOrders } from '../../services/selectors/feed';
 
 function Order () {
-  const orders = useSelector(getFeedOrders)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: FEED_CONNECTION_INIT,
+      payload: BURGER_API_WSS_FEED_ALL,
+    })
+
+    return () => {
+      dispatch({ type: FEED_CONNECTION_CLOSE })
+    }
+  }, [dispatch])
+
+  const orders: TFeedOrder[] = useSelector(getFeedOrders);
+
   const ingredients = useSelector(getInitialIngredients);
   const { id } = useParams<{id: string}>();
   const order: TFeedOrder | undefined = orders?.find(order => order._id === id)
 
   const orderInfo = useMemo(() => {
-    if (!ingredients.length) return null
+    if (!ingredients.length || !orders?.length) return null
 
-    const ingredientsInfo = order?.ingredients.reduce((acc: any, item: string) => {
+    const ingredientsInfo: Array<TIngredientData> = order?.ingredients.reduce((acc: any, item: string) => {
       const ingredient = ingredients.find((ing) => ing._id === item)
       if (ingredient) acc.push(ingredient)
       return acc
     }, [])
+
+    const uniqIngredients: Array<TIngredientData> = ingredientsInfo.filter((value, index, self) =>
+      index === self.findIndex((t) => (
+        t._id === value._id
+      ))
+    )
+    
+    type TcountIngredients = {
+      [key: string]: number
+    }
+
+    const countIngredients = ingredientsInfo.reduce((acc: TcountIngredients, ingredient: { _id: string | number; }) => {
+      acc[ingredient._id] = (acc[ingredient._id] || 0) +1
+      return acc
+    }, {})
 
     const total = ingredientsInfo?.reduce((acc: any, item: TIngredientData) => {
       return acc + item.price
@@ -29,16 +61,15 @@ function Order () {
 
     return {
       ...order,
-      ingredientsInfo,
+      uniqIngredients,
       total,
+      countIngredients,
     }
   }, [order, ingredients])
 
-  if (orders.length === 0) {
+  if (orders === null || orders.length === 0) {
     return (<Preloader />)
   }
-
-  console.log('ingredientsNewArr', orderInfo?.ingredientsInfo)
 
   if (order && orderInfo) return (
     <section className={`${orderStyles.order} mt-5`}>
@@ -47,7 +78,7 @@ function Order () {
       <p className='text text_type_main-default mb-15 text_color_success'>{formatOrderStatus(order.status)}</p>
       <h3 className='text text_type_main-medium mb-6'>Состав:</h3>
       <ul className={`${orderStyles.ingredients} mb-10 custom-scroll`}>
-        {orderInfo.ingredientsInfo.map((ingredient: TIngredientData, index: number) => 
+        {orderInfo.uniqIngredients.map((ingredient: TIngredientData, index: number) => 
           <li key={index}>
             <div className={orderStyles.ingredient}>
               <div className={orderStyles.ingredientWrapper}>
@@ -57,7 +88,7 @@ function Order () {
             <p className={orderStyles.ingredientName}>{ingredient.name}</p>
             <div className={orderStyles.count}>
               <div>
-                1
+                {orderInfo.countIngredients[ingredient._id]}
                 <span>x</span>
                 {ingredient.price}
               </div>

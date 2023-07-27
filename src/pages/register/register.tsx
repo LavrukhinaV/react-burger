@@ -3,7 +3,7 @@ import registerStyles from './register.module.css';
 import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from "../../components/form/form";
 import { signUp } from "../../services/actions/auth";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "../../services/hooks/hooks";
 import { useNavigate } from "react-router-dom";
 import { FormEvent } from "react";
 
@@ -27,7 +27,6 @@ function Register() {
 
   const handleRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //@ts-ignore
     dispatch(signUp(values));
     navigate("/login")
   }

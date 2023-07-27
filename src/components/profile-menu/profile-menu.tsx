@@ -1,7 +1,7 @@
 import profileMenuStyles from './profile-menu.module.css';
 import { NavLink, useNavigate } from "react-router-dom";
 import { signOut } from "../../services/actions/auth";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/hooks';
 
 function ProfileMenu() {
   const dispatch = useDispatch();
@@ -9,7 +9,6 @@ function ProfileMenu() {
 
   
   const handleLogoutClick = () => {
-    //@ts-ignore
     dispatch(signOut());
     navigate("/profile")
   }

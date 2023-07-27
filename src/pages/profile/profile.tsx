@@ -1,20 +1,19 @@
 import profileStyles from './profile.module.css';
 import ProfileMenu from "../../components/profile-menu/profile-menu";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-// import { useSelector } from "react-redux";
-import { useSelector } from '../../services/hooks/hooks';
+import { useSelector, useDispatch } from '../../services/hooks/hooks';
 import { getUser } from "../../services/selectors/auth";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react"
 import { updateUserData } from "../../services/actions/auth";
 import { objectsEqual } from "../../utils/utils";
 import { useForm } from "../../hooks/useForm";
+import { TFullUserData } from '../../utils/types';
 
 function Profile() {
   const user = useSelector(getUser);
   const dispatch = useDispatch();
 
-  const {values, handleChange, setValues} = useForm({
+  const {values, handleChange, setValues} = useForm<TFullUserData>({
     email: user.email ?? "",
     name: user.name ?? "",
     password: ''
@@ -36,7 +35,6 @@ function Profile() {
   }
 
   const handleFormSubmit = () => {
-    //@ts-ignore
     dispatch(updateUserData(values));
     setDisabledFields(['name', 'email', 'password'])
     setValues({

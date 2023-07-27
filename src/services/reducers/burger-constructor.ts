@@ -10,24 +10,12 @@ import {
 
 type TConstructorState = {
   ingredients: Array<TIngredientDataWithUUId>;
-  bun: TIngredientData
+  bun: TIngredientData | null
 }
 
 const constructorInitialState: TConstructorState = {
   ingredients: [],
-  bun: {
-    _id: "",
-    calories: 0,
-    carbohydrates: 0,
-    fat: 0,
-    image: "",
-    image_large: "",
-    image_mobile: "",
-    name: "",
-    price: 0,
-    proteins: 0,
-    type: ""
-  },
+  bun: null
 };
 
 export const constructorReduser = (state = constructorInitialState, action: TBurgerConstructorActions): TConstructorState => {
@@ -76,19 +64,7 @@ export const constructorReduser = (state = constructorInitialState, action: TBur
       return {
         ...state,
         ingredients: [],
-        bun: {
-          _id: "",
-          calories: 0,
-          carbohydrates: 0,
-          fat: 0,
-          image: "",
-          image_large: "",
-          image_mobile: "",
-          name: "",
-          price: 0,
-          proteins: 0,
-          type: ""
-        },
+        bun: null
       }
     }
     

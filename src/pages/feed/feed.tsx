@@ -4,9 +4,8 @@ import OrdersList from '../../components/orders-list/orders-list';
 import feedStyles from './feed.module.css';
 import { useEffect } from 'react';
 import { FEED_CONNECTION_CLOSE, FEED_CONNECTION_INIT } from '../../services/constants/ws';
-import { BURGER_API_WSS_FEED } from '../../utils/constants';
+import { BURGER_API_WSS_FEED_ALL } from '../../utils/constants';
 import { getFeedOrders } from '../../services/selectors/feed';
-import { TFeedOrder } from '../../utils/types';
 
 function Feed() {
   const dispatch = useDispatch();
@@ -14,7 +13,7 @@ function Feed() {
   useEffect(() => {
     dispatch({
       type: FEED_CONNECTION_INIT,
-      payload: BURGER_API_WSS_FEED,
+      payload: BURGER_API_WSS_FEED_ALL,
     })
 
     return () => {
@@ -22,12 +21,13 @@ function Feed() {
     }
   }, [dispatch])
 
+  const orders = useSelector(getFeedOrders);
 
   return (
     <main className={feedStyles.content}>
       <h1 className="text text_type_main-large mb-5 mt-10">Лента заказов</h1>
       <div className={feedStyles.container}>
-        <OrdersList />
+        <OrdersList orders={orders}/>
         <FeedInfo />
       </div>
     </main>

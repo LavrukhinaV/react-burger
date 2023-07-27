@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import { getOrderDate } from "../../services/actions/order-details";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks/hooks';
 import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
 import { useDrop } from "react-dnd";
 import { addConstructorIngredient, setConstructorBun } from "../../services/actions/burger-constructor";
@@ -28,15 +28,6 @@ function BurgerConstructor () {
     setModalOrderDetailsOpen(false)
   };
 
-  function orderIngredients (): Array<TIngredientData> |Array<string> {
-    const allIngredients = [
-      constructorBun._id,
-      ...constructorIngredients.map(item => item._id),
-      constructorBun._id
-    ]
-    return allIngredients
-  };
-
   const price = useMemo(() => {
     if( constructorIngredients  && constructorBun) 
     return (
@@ -49,10 +40,17 @@ function BurgerConstructor () {
 
 
   function handleOrderSubmit() {
-    if (user.name) {
-      //@ts-ignore
-      dispatch(getOrderDate(orderIngredients()));
+    if (user.name || constructorIngredients.length === 0) {
+      if (constructorBun) {
+        const allIngredients = [
+        constructorBun._id,
+        ...constructorIngredients.map(item => item._id),
+        constructorBun._id
+
+      ]
+      dispatch(getOrderDate(allIngredients));
       setModalOrderDetailsOpen(true);
+    }
     } else {
       navigate("/login")
     }

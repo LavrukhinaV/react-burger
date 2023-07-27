@@ -1,8 +1,7 @@
 import { ChangeEvent, useState } from "react";
-import { TFormValue } from "../utils/types";
 
-export function useForm(inputValues: TFormValue={}) {
-  const [values, setValues] = useState<TFormValue>(inputValues);
+export function useForm<T>(inputValues: T) {
+  const [values, setValues] = useState<T>(inputValues);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const {value, name} = event.target;

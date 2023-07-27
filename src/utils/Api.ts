@@ -35,12 +35,13 @@ export const getIngredients = async (): Promise<TIngredientData[]> => {
   return checkSuccess(data, data.data);
 };
 
-export const submitOrder = async (ingredients: Array<TIngredientData>): Promise<TOrderData> => {
+export const submitOrder = async (ingredients: Array<string>, token: string | undefined): Promise<TOrderData> => {
   const res = await fetch(`${BASE_URL}/orders`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify({
       ingredients: ingredients

@@ -5,7 +5,7 @@ import { resetPassword } from "../../utils/Auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
-import { TLink } from '../../utils/types';
+import { TFormValue, TLink } from '../../utils/types';
 
 const links: Array<TLink> = [
   {
@@ -19,7 +19,7 @@ function ResetPassword() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { values, handleChange } = useForm({
+  const { values, handleChange } = useForm<TFormValue>({
     token: "",
     password: ""
   });
