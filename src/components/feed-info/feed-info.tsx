@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks/hooks";
 import feedInfoStyles from "./feed-info.module.css"
 import { getFeedOrders, getFeedTotalOrders, getFeedTotalTodayOrders } from "../../services/selectors/feed";
 

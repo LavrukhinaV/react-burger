@@ -1,5 +1,5 @@
 import ingredientDetailsStyles from './ingredient-details.module.css';
-import { useSelector } from "react-redux";
+import { useSelector } from '../../services/hooks/hooks';
 import { getInitialIngredients } from "../../services/selectors/initial-ingredients";
 import { useParams } from "react-router-dom";
 import Preloader from "../preloader/preloader";

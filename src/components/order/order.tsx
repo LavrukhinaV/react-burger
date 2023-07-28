@@ -1,30 +1,14 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import orderStyles from './order.module.css'
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/hooks';
 import { useParams } from 'react-router-dom';
 import { TFeedOrder, TIngredientData, formatOrderStatus } from '../../utils/types';
 import Preloader from '../preloader/preloader';
 import { getInitialIngredients } from '../../services/selectors/initial-ingredients';
-import { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { FEED_CONNECTION_CLOSE, FEED_CONNECTION_INIT } from '../../services/constants/ws';
-import { BURGER_API_WSS_FEED_ALL } from '../../utils/constants';
+import { useMemo } from 'react';
 import { getFeedOrders } from '../../services/selectors/feed';
 
 function Order () {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch({
-      type: FEED_CONNECTION_INIT,
-      payload: BURGER_API_WSS_FEED_ALL,
-    })
-
-    return () => {
-      dispatch({ type: FEED_CONNECTION_CLOSE })
-    }
-  }, [dispatch])
-
   const orders: TFeedOrder[] = useSelector(getFeedOrders);
 
   const ingredients = useSelector(getInitialIngredients);
@@ -39,6 +23,7 @@ function Order () {
       if (ingredient) acc.push(ingredient)
       return acc
     }, [])
+
 
     const uniqIngredients: Array<TIngredientData> = ingredientsInfo.filter((value, index, self) =>
       index === self.findIndex((t) => (
@@ -55,7 +40,7 @@ function Order () {
       return acc
     }, {})
 
-    const total = ingredientsInfo?.reduce((acc: any, item: TIngredientData) => {
+    const total: number = ingredientsInfo?.reduce((acc, item) => {
       return acc + item.price
     }, 0)
 
@@ -65,7 +50,7 @@ function Order () {
       total,
       countIngredients,
     }
-  }, [order, ingredients])
+  }, [ingredients, orders?.length, order])
 
   if (orders === null || orders.length === 0) {
     return (<Preloader />)
@@ -78,7 +63,7 @@ function Order () {
       <p className='text text_type_main-default mb-15 text_color_success'>{formatOrderStatus(order.status)}</p>
       <h3 className='text text_type_main-medium mb-6'>Состав:</h3>
       <ul className={`${orderStyles.ingredients} mb-10 custom-scroll`}>
-        {orderInfo.uniqIngredients.map((ingredient: TIngredientData, index: number) => 
+        {orderInfo.uniqIngredients.map((ingredient, index) => 
           <li key={index}>
             <div className={orderStyles.ingredient}>
               <div className={orderStyles.ingredientWrapper}>

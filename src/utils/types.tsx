@@ -83,3 +83,9 @@ export function formatOrderStatus(orderStatus: OrderStatus): string {
       return 'Создан'
   }
 }
+
+export enum WebsocketStatus {
+  CONNECTING = 'CONNECTING...',
+  ONLINE = 'ONLINE',
+  OFFLINE = 'OFFLINE'
+}

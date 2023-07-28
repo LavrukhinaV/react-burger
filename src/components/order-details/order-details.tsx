@@ -1,5 +1,5 @@
 import orderDetailsStyles from './order-details.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/hooks';
 import { getOrderDate } from "../../services/selectors/order-details";
 import Preloader from "../preloader/preloader";
 

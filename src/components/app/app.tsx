@@ -45,6 +45,7 @@ function App() {
         <Route path={'/feed/:id'} element={<OrderPage/>}/>
         <Route path="/profile" element={<ProtectedRoute element={<Profile />} protectedFromAuthorized={false}/>}/>
         <Route path="/order-history" element={<ProtectedRoute element={<OrderHistory />} protectedFromAuthorized={false}/> }/>
+        <Route path={'/order-history/:id'} element={<ProtectedRoute element={<OrderPage/>} protectedFromAuthorized={false}/>}/>
         <Route path="/login" element={<ProtectedRoute element={<Login />} protectedFromAuthorized={true}/>}/>
         <Route path="/register" element={<ProtectedRoute element={<Register />} protectedFromAuthorized={true}/>}/>
         <Route path="/forgot-password" element={<ProtectedRoute element={<ForgotPassword />} protectedFromAuthorized={true}/>}/>
@@ -59,6 +60,11 @@ function App() {
             </Modal>
           }/>
           <Route path={'/feed/:id'} element={
+            <Modal onClose={closeModal}>
+              <Order/>
+            </Modal>
+          }/>
+          <Route path={'/order-history/:id'} element={
             <Modal onClose={closeModal}>
               <Order/>
             </Modal>

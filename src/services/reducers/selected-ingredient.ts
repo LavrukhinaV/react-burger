@@ -28,7 +28,7 @@ export const selectedIngredientReduser = (state = selectedIngredientState, actio
     case SET_SELECTED_INGREDIENT: {
       return {
         ...state,
-        selectedIngredient: action.paylod,
+        selectedIngredient: action.ingredient,
       }
     }
 

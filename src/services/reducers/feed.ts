@@ -1,14 +1,15 @@
-import { TFeedOrder } from '../../utils/types';
+import { TFeedOrder, WebsocketStatus } from '../../utils/types';
 import {
   FEED_CONNECTION_SUCCESS,
   FEED_CONNECTION_ERROR,
   FEED_CONNECTION_CLOSED,
-  FEED_GET_MESSAGE
+  FEED_GET_MESSAGE,
+  FEED_CONNECTION_CONNECTING
 } from '../constants/ws';
 import { TWSActions } from '../actions/ws';
 
 type TFeedState = {
-  wsConnected: boolean,
+  wsConnected: WebsocketStatus,
   orders: TFeedOrder[]
   total?: number,
   totalToday?: number,
@@ -16,35 +17,38 @@ type TFeedState = {
 }
 
 const initialState: TFeedState = {
-  wsConnected: false,
+  wsConnected: WebsocketStatus.OFFLINE,
   orders: [],
   total: 0,
   totalToday: 0
 };
 
-// Создадим редьюсер для WebSocket
 export const feedReduser = (state = initialState, action: TWSActions) => {
   switch (action.type) {
+    case FEED_CONNECTION_CONNECTING:
+      return {
+        ...state,
+        wsConnected: WebsocketStatus.CONNECTING
+      }
     case FEED_CONNECTION_SUCCESS:
       return {
         ...state,
         error: undefined,
-        wsConnected: true
+        wsConnected: WebsocketStatus.ONLINE
       };
 
     case FEED_CONNECTION_ERROR:
       return {
         ...state,
         error: action.payload,
-        wsConnected: false
+        wsConnected: WebsocketStatus.OFFLINE
       };
 
     case FEED_CONNECTION_CLOSED:
       return {
         ...state,
-        wsConnected: false
+        wsConnected: WebsocketStatus.OFFLINE
       };
-
 
     case FEED_GET_MESSAGE:
       return {

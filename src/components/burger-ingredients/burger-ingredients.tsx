@@ -3,7 +3,7 @@ import burgerIngredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { TIngredientData } from "../../utils/types";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks/hooks';
 import { SET_SELECTED_INGREDIENT } from "../../services/constants/selected-ingredient";
 import { getInitialIngredients } from "../../services/selectors/initial-ingredients";
 import { getConstructorIngredients, getConstructorBun } from "../../services/selectors/burger-constructor";
@@ -21,7 +21,7 @@ function BurgerIngredients (){
   function handleIngredientClick(item: TIngredientData) {
     dispatch({
       type: SET_SELECTED_INGREDIENT,
-      paylod: item
+      ingredient: item
     });
   };
 

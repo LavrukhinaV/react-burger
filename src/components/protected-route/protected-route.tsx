@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { getUser, isAuth } from "../../services/selectors/auth";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks/hooks";
 import Preloader from "../preloader/preloader";
 import { FC, ReactElement } from "react";
 

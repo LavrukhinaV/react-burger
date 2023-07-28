@@ -1,8 +1,8 @@
 import orderCardStyles from "./order-card.module.css"
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useMemo } from "react";
-import { TFeedOrder, TIngredientData } from "../../utils/types";
-import { useSelector } from "react-redux";
+import { TFeedOrder, TIngredientData, formatOrderStatus } from "../../utils/types";
+import { useSelector } from "../../services/hooks/hooks";
 import { getInitialIngredients } from "../../services/selectors/initial-ingredients";
 import { Link, useLocation } from "react-router-dom";
 
@@ -12,6 +12,7 @@ type OrderCardPropsType = {
 
 const OrderCard: FC<OrderCardPropsType> = ({ order }) => {
   const location = useLocation();
+  const navigateTo = location.pathname === '/feed'  ? `/feed/${order._id}` : `/order-history/${order._id}`
 
   const ingredients = useSelector(getInitialIngredients);
   
@@ -30,7 +31,7 @@ const OrderCard: FC<OrderCardPropsType> = ({ order }) => {
       return acc + item.price
     }, 0)
 
-    const ingredientsToShow = ingredientsInfo.slice(0, maxIngredientsToShow)
+    const ingredientsToShow: TIngredientData[] = ingredientsInfo.slice(0, maxIngredientsToShow)
 
     const count = 
       ingredientsInfo.length > maxIngredientsToShow
@@ -49,7 +50,7 @@ const OrderCard: FC<OrderCardPropsType> = ({ order }) => {
   if(!orderInfo) return null;
 
   return (
-    <Link to={`/feed/${order._id}`} state={{background: location}}>
+    <Link to={navigateTo} state={{background: location}}>
       <article className={`${orderCardStyles.order} p-6`} >
         <h3 className="text text_type_digits-default">
           {order.number}
@@ -58,10 +59,12 @@ const OrderCard: FC<OrderCardPropsType> = ({ order }) => {
           <FormattedDate date={new Date(order.createdAt)} />
         </p>
         <h2 className={`${orderCardStyles.orderTitle} text text_type_main-medium`}>{order.name}</h2>
-        {/* <p className={`${orderCardStyles.status} text text_type_main-default`}>Создан</p> */}
+        {location.pathname === "/order-history" &&
+          <p className={`${orderCardStyles.status} text text_type_main-default`}>{formatOrderStatus(order.status)}</p>
+        }
         <ul className={orderCardStyles.ingredients}>
           {
-            orderInfo.ingredientsToShow.map((ingredient: TIngredientData, index: number) => {
+            orderInfo.ingredientsToShow.map((ingredient, index) => {
               let zIndex = maxIngredientsToShow - index
               let areHiddenIngredients = maxIngredientsToShow === index + 1
               return (

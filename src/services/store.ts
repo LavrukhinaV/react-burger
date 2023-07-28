@@ -2,7 +2,7 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import { rootReducer } from "./reducers";
 import thunk from 'redux-thunk';
 import { socketMiddleware } from './middleware/socketMiddleware';
-import { FEED_CONNECTION_CLOSE, FEED_CONNECTION_CLOSED, FEED_CONNECTION_ERROR, FEED_CONNECTION_INIT, FEED_CONNECTION_SUCCESS, FEED_GET_MESSAGE } from './constants/ws';
+import { FEED_CONNECTION_CLOSE, FEED_CONNECTION_CLOSED, FEED_CONNECTION_CONNECTING, FEED_CONNECTION_ERROR, FEED_CONNECTION_INIT, FEED_CONNECTION_SUCCESS, FEED_GET_MESSAGE } from './constants/ws';
 
 declare global {
   interface Window {
@@ -13,6 +13,7 @@ declare global {
 const feedWSActions = {
   wsInit: FEED_CONNECTION_INIT,
   wsClose: FEED_CONNECTION_CLOSE,
+  wsConnecting: FEED_CONNECTION_CONNECTING,
   onOpen: FEED_CONNECTION_SUCCESS,
   onClose: FEED_CONNECTION_CLOSED,
   onError: FEED_CONNECTION_ERROR,
