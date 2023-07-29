@@ -10,20 +10,19 @@ import { getFeedOrders } from '../../services/selectors/feed';
 
 function Order () {
   const orders: TFeedOrder[] = useSelector(getFeedOrders);
-
   const ingredients = useSelector(getInitialIngredients);
   const { id } = useParams<{id: string}>();
   const order: TFeedOrder | undefined = orders?.find(order => order._id === id)
-
+  
   const orderInfo = useMemo(() => {
     if (!ingredients.length || !orders?.length) return null
-
+    
     const ingredientsInfo: Array<TIngredientData> = order?.ingredients.reduce((acc: any, item: string) => {
       const ingredient = ingredients.find((ing) => ing._id === item)
       if (ingredient) acc.push(ingredient)
       return acc
     }, [])
-
+    
 
     const uniqIngredients: Array<TIngredientData> = ingredientsInfo.filter((value, index, self) =>
       index === self.findIndex((t) => (

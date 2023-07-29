@@ -9,6 +9,7 @@ import { TFullUserData } from "../../utils/types";
 
 type TUserInitialState = {
   isAuthChecked: boolean,
+  isAuth: null | boolean,
 
   user: TFullUserData,
 
@@ -27,6 +28,7 @@ type TUserInitialState = {
 
 const userInitialState: TUserInitialState = {
   isAuthChecked: false,
+  isAuth: null,
 
   user: {
     name: "",
@@ -56,6 +58,7 @@ export const userReduser = (state = userInitialState, action: TAuthActions): TUs
         user: action.paylod.user,
         loginRequest: true,
         loginFailed: false,
+        isAuth: true
       }
     }
 
@@ -70,6 +73,7 @@ export const userReduser = (state = userInitialState, action: TAuthActions): TUs
       return {
         ...state,
         loginFailed: true,
+        isAuth: false
       }
     }
 
@@ -106,6 +110,7 @@ export const userReduser = (state = userInitialState, action: TAuthActions): TUs
         logoutRequest: true,
         logoutFailed: false,
         loginSuccess: false,
+        isAuth: false
       }
     }
 

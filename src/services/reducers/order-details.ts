@@ -12,7 +12,7 @@ const orderInitialState: TOrderInitialState = {
   orderDate: {
     name: "",
     order: {
-      number: 6257
+      number: null
     },
     success: false
   },

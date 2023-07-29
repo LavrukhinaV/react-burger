@@ -43,7 +43,7 @@ export type TFormValue = {
 export type TOrderData = {
   name: string,
   order: {
-    number: 6257
+    number: number | null
   },
   success: boolean
 };
