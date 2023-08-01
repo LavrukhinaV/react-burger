@@ -15,3 +15,6 @@
 `npm i` — установка зависимостей
 
 `npm run start` — запускает приложение
+
+### Сайт доступен по адресу:
+https://lavrukhinav.github.io/react-burger/
