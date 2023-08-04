@@ -9,7 +9,7 @@ import {
 } from "../constants/auth";
 
 export interface ISetUserSuccess {
-  paylod: any;
+  payload: any;
   readonly type: typeof SET_USER_SUCCESS;
 };
 
@@ -75,7 +75,7 @@ export const getUserData = (): AppThunkAction => (dispatch: AppDispatch) => {
   .then(res => {
     dispatch({
       type: SET_USER_SUCCESS,
-      paylod: res,
+      payload: res,
     })
   })
   .catch((err) => {
@@ -97,7 +97,7 @@ export const updateUserData = (data: TFullUserData): AppThunkAction => (dispatch
   .then(res => {
     dispatch({
       type: SET_USER_SUCCESS,
-      paylod: res,
+      payload: res,
     })
   })
   .catch((err) => {
@@ -126,7 +126,7 @@ export const signIn = (data: TAuthData): AppThunkAction => (dispatch: AppDispatc
 
     dispatch({
       type: SET_USER_SUCCESS,
-      paylod: res,
+      payload: res,
     })
   })
   .catch((err) => {
@@ -140,7 +140,7 @@ export const signUp = (data: TFullUserData): AppThunkAction => (dispatch: AppDis
   register(data).then(res => {
     dispatch({
       type: SET_REGISTER_SUCCESS,
-      paylod: res,
+      payload: res,
     })
   })
   .catch((err) => {

@@ -26,7 +26,7 @@ type TUserInitialState = {
   logoutFailed: boolean,
 }
 
-const userInitialState: TUserInitialState = {
+export const userInitialState: TUserInitialState = {
   isAuthChecked: false,
   isAuth: null,
 
@@ -55,7 +55,7 @@ export const userReduser = (state = userInitialState, action: TAuthActions): TUs
     case SET_USER_SUCCESS: {
       return {
         ...state,
-        user: action.paylod.user,
+        user: action.payload.user,
         loginRequest: true,
         loginFailed: false,
         isAuth: true

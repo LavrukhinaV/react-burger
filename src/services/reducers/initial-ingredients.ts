@@ -13,7 +13,7 @@ type TInitialIngredientsState = {
   ingredientsRequestFailed: boolean;
 }
 
-const initialIngredientsState: TInitialIngredientsState = {
+export const initialIngredientsState: TInitialIngredientsState = {
   ingredients: [],
   ingredientsRequestSuccess: false,
   ingredientsRequestFailed: false,
@@ -21,11 +21,10 @@ const initialIngredientsState: TInitialIngredientsState = {
 
 export const initialIngredientsReduser = (state = initialIngredientsState, action: TInitialIngredientsActions): TInitialIngredientsState => {
   switch(action.type) {
-
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
-        ingredients: action.paylod,
+        ingredients: action.payload,
         ingredientsRequestSuccess: true,
         ingredientsRequestFailed: false,
       }

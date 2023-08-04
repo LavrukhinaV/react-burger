@@ -13,7 +13,7 @@ type TConstructorState = {
   bun: TIngredientData | null
 }
 
-const constructorInitialState: TConstructorState = {
+export const constructorInitialState: TConstructorState = {
   ingredients: [],
   bun: null
 };
@@ -21,7 +21,6 @@ const constructorInitialState: TConstructorState = {
 export const constructorReduser = (state = constructorInitialState, action: TBurgerConstructorActions): TConstructorState => {
   switch(action.type) {
     case UPDATE_CONSTRUCTOR_INGREDIENTS: {
-
       const ingredients = [...state.ingredients];
       ingredients.splice(
         action.payload.to,

@@ -6,7 +6,7 @@ type TSelectedIngredientState = {
   selectedIngredient: TIngredientData
 }
 
-const selectedIngredientState: TSelectedIngredientState = {
+export const selectedIngredientState: TSelectedIngredientState = {
   selectedIngredient: {
     _id: "",
     calories: 0,

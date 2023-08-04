@@ -16,14 +16,14 @@ type TFeedState = {
   error?: Event,
 }
 
-const initialState: TFeedState = {
+export const feedInitialState: TFeedState = {
   wsConnected: WebsocketStatus.OFFLINE,
   orders: [],
   total: 0,
   totalToday: 0
 };
 
-export const feedReduser = (state = initialState, action: TWSActions) => {
+export const feedReduser = (state = feedInitialState, action: TWSActions) => {
   switch (action.type) {
     case FEED_CONNECTION_CONNECTING:
       return {
