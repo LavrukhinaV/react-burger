@@ -8,7 +8,7 @@ type TOrderInitialState = {
   orderRequestFailed: boolean,
 }
 
-const orderInitialState: TOrderInitialState = {
+export const orderInitialState: TOrderInitialState = {
   orderDate: {
     name: "",
     order: {

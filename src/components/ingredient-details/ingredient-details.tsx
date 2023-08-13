@@ -17,7 +17,7 @@ function IngredientDetails() {
   } 
 
   if (ingredient) return (
-    <div className={ingredientDetailsStyles.container}>
+    <div className={ingredientDetailsStyles.container} data-testid="ingredient-info">
       <h2 className={`${ingredientDetailsStyles.title} text text_type_main-large mt-2`}>Детали ингредиента</h2>
       <img src={ingredient.image_large} alt={ingredient.name}/>
       <p className="mt-4 mb-8 text text_type_main-medium">{ingredient.name}</p>

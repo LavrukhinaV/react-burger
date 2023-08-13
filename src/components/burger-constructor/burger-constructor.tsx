@@ -70,7 +70,7 @@ function BurgerConstructor () {
   return (
     <>
       <section className={`${burgerConstructorStyles.elements} pt-25 mb-10`}>
-        <div className={`${burgerConstructorStyles.burger} mb-10`} ref={dropTarget}>
+        <div className={`${burgerConstructorStyles.burger} mb-10`} ref={dropTarget} data-testid="burger-constructor">
         {constructorBun && <ConstructorElement
             type="top"
             isLocked={true}
@@ -101,11 +101,11 @@ function BurgerConstructor () {
           />}
         </div>
         <div className={`${burgerConstructorStyles.container} pr-4`}>
-          <p className={`${burgerConstructorStyles.count} mr-10 text text_type_digits-medium`}>
+          <p className={`${burgerConstructorStyles.count} mr-10 text text_type_digits-medium`} data-testid="burger-cost">
             {price}
             <CurrencyIcon type="primary"/>
           </p>
-          <Button disabled={constructorIngredients.length === 0 || !constructorBun} htmlType="button" type="primary" size="large" onClick={handleOrderSubmit}>
+          <Button disabled={constructorIngredients.length === 0 || !constructorBun} htmlType="button" type="primary" size="large" onClick={handleOrderSubmit} data-testid="submit-order">
             Оформить заказ
           </Button>
         </div>

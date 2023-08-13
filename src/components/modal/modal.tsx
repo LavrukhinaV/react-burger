@@ -31,7 +31,7 @@ const Modal: FC<PropsWithChildren<ModalPropsType>> = ({ children, onClose }) => 
     ReactDOM.createPortal (
       <>
         <div className={`${modalStyles.container} p-10`}>
-          <button className={`${modalStyles.button}`} onClick={onClose}>
+          <button className={`${modalStyles.button}`} onClick={onClose} data-testid="modal-close-button">
             <CloseIcon type="primary" />
           </button>
           {children}

@@ -12,8 +12,8 @@ export interface IGetIngredientsRequest {
 }
 
 export interface IGetIngredientsSuccess {
+  payload: Array<TIngredientData>;
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly paylod: Array<TIngredientData>;
 }
 
 export interface IGetIngredientsFailed {
@@ -33,7 +33,7 @@ export const loadInitialIngredients = (): AppThunkAction => (dispatch: AppDispat
   getIngredients().then(res => {
     dispatch({
       type: GET_INGREDIENTS_SUCCESS,
-      paylod: res,
+      payload: res,
     })
   })
   .catch((err) => {
