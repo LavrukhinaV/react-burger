@@ -28,6 +28,7 @@ const BurgerIngredient: FC<BurgerIngredientPropsType> = ({item, onClick, count})
       className={`${burgerIngredientStyles.link} text_color_primary`}
       to={`/ingredients/${item._id}`}
       state={{background: location}}
+      data-testid="ingredient-item"
     >
       {count !== 0 ? <Counter count={count} size="default" extraClass="m-1" /> : ""}
       <article className={`${burgerIngredientStyles.ingredient}`} onClick={handleIngredientClick} ref={dragRef}>

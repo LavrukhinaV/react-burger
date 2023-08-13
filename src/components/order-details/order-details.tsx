@@ -12,7 +12,7 @@ function OrderDetails() {
 
   return (
     orderDate &&
-      <div className={orderDetailsStyles.container}>
+      <div className={orderDetailsStyles.container} data-testid="order-info">
         <h2 className={`${orderDetailsStyles.title} mb-8 text text_type_digits-large`}>{orderDate.order?.number}</h2>
         <p className="mb-15 text text_type_main-medium">идентификатор заказа</p>
         <span className={`${orderDetailsStyles.icon} mb-15`}/>
